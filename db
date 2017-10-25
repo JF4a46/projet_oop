@@ -1,0 +1,6 @@
+Quelques idées d'attributs pour la base de données que j'ai travaillé duessus un peu:
+
+Véhicule {marque, modele, couleur, immatriculation, kilometrage, reparations, derniere inspection}
+Client {prenom, nom, #client, #permis, conditions, classes,#telephone}
+Employe {prenom, nom, #employe}
+facture {#facture, montant, }
