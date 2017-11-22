@@ -12,8 +12,9 @@ public class addVehicule extends JPanel {
 	private JButton menu, add, remove;
 	private String vehicule[] = {"Classe Economique", "Classe Moyenne", "Classe Confort", "Classe de luxe", "Classe de vehicules utilitaires"};
 	private ArrayList<String> vehicList = new  ArrayList<String>(Arrays.asList(vehicule));
-	private JList<String> vehiculeList; 
-	private JList<String> vJList = new JList<String>(new DefaultListModel<String>());
+	private DefaultListModel<String> model = new DefaultListModel<String>();
+	private JList<String> vJList = new JList<String>(model);
+	JScrollPane listScroller;
 	private JPanel current;
 	private JFrame main;	
 	
@@ -29,35 +30,44 @@ public class addVehicule extends JPanel {
 	}
 	
 	public void initComponents() {
+		
+		for(int i = 0; i < vehicList.size(); i++) {
+			String val =  vehicList.get(i);
+			model.addElement(val);
+		}
+		
 		type = new defaultTextField("Type de vehicule");
 		price = new defaultTextField("Prix");
 		menu = new JButton("Retour au menu");
 		add = new JButton("Ajouter");
 		remove = new JButton("Enlever");
-		vehiculeList = new JList<String>(vehicule);
-		vJList = new JList<String>(vehicule);
+		vJList = new JList<String>(model);
+		listScroller = new JScrollPane();
+		
 		
 		type.setBounds(50, 20, 180, 30);
 		price.setBounds(50, 60, 180, 30);
 		menu.setBounds(50, 400, 180, 30);
 		add.setBounds(50, 260, 100, 30);
 		remove.setBounds(270, 260, 100, 30);
-		vehiculeList.setBounds(270, 20, 180, 200);
+		listScroller.setBounds(260, 20, 190, 200);		
+		listScroller.setViewportView(vJList);
 		
 		this.add(type);
 		this.add(price);
 		this.add(menu);
 		this.add(add);
 		this.add(remove);
-		this.add(vehiculeList);
+		this.add(listScroller);
 		
 		add.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(type.getText().equals("Type de vehicule") == false) {
-				DefaultListModel<String> model = (DefaultListModel) vJList.getModel();
-				model.addElement(type.getText());
+					vehicList.add(type.getText());
+					model.addElement(type.getText());
+					vJList.setModel(model);
 				}
 				
 			}
@@ -92,10 +102,11 @@ public class addVehicule extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				int selectedIndex = vehiculeList.getSelectedIndex();
+				int selectedIndex = vJList.getSelectedIndex();
 				if(selectedIndex != -1) {
+					model.removeElementAt(selectedIndex);
 					vehicList.remove(selectedIndex);
-					vehiculeList.remove(selectedIndex);
+					vJList.setModel(model);
 				}
 				
 			}
