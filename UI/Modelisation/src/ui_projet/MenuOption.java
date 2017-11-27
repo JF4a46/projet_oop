@@ -7,7 +7,7 @@ import javax.swing.*;
 public class MenuOption extends JPanel {
 	
 	private boolean admin;
-	private JButton crLocation, crReservation, endLocation, end, addVehicule, remVehicule, modParametre;
+	private JButton crLocation, client, end, vehicule, modParametre;
 	private JPanel current;
 	private JFrame main;
 	
@@ -23,19 +23,15 @@ public class MenuOption extends JPanel {
 	
 	private void initComponents(boolean admin) {
 		crLocation = new JButton("Creer location");
-		crReservation = new JButton("Creer reservation");
-		endLocation = new JButton("Terminer location");
+		client = new JButton("Liste des clients");
 		end = new JButton("Deconnexion");
-		addVehicule = new JButton("Ajouter  vehicule");
-		remVehicule = new JButton("Enlever vehicule");
+		vehicule = new JButton("Liste des vehicules");
 		modParametre = new JButton("Modifier les parametres");
 		
 		crLocation.setBounds(50, 20, 180, 30);
-		crReservation.setBounds(270, 20, 180, 30);
-		endLocation.setBounds(50, 60, 180, 30);
-		addVehicule.setBounds(270, 60, 180, 30);
-		remVehicule.setBounds(50, 100, 180, 30);
-		modParametre.setBounds(270, 100, 180, 30);
+		client.setBounds(270, 20, 180, 30);
+		vehicule.setBounds(50, 60, 180, 30);
+		modParametre.setBounds(270, 60, 180, 30);
 		end.setBounds(190, 140, 120, 30);
 		
 		crLocation.addMouseListener(new MouseListener() {
@@ -43,6 +39,9 @@ public class MenuOption extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				main.remove(current);
+				MenuClient create = new MenuClient(main, admin, true);
+				SwingUtilities.updateComponentTreeUI(main);
+				
 			}
 
 			@Override
@@ -71,11 +70,14 @@ public class MenuOption extends JPanel {
 			
 		});
 		
-		crReservation.addMouseListener(new MouseListener() {
+		
+		client.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				main.remove(current);
+				MenuClient create = new MenuClient(main, admin, false);
+				SwingUtilities.updateComponentTreeUI(main);
 			}
 
 			@Override
@@ -104,40 +106,7 @@ public class MenuOption extends JPanel {
 			
 		});
 		
-		endLocation.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				main.remove(current);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		addVehicule.addMouseListener(new MouseListener() {
+		vehicule.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -172,38 +141,7 @@ public class MenuOption extends JPanel {
 			
 		});
 		
-		remVehicule.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				main.remove(current);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		
 		
 		modParametre.addMouseListener(new MouseListener() {
 
@@ -274,13 +212,11 @@ public class MenuOption extends JPanel {
 		});
 		
 		this.add(crLocation);
-		this.add(crReservation);
-		this.add(endLocation);
+		this.add(client);
 		this.add(end);
 				
 		if(admin) {
-			this.add(addVehicule);
-			this.add(remVehicule);
+			this.add(vehicule);
 			this.add(modParametre);
 		}
 		

@@ -1,7 +1,6 @@
 package ui_projet;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ModVehic extends JPanel {
 	private JList<String> list;
