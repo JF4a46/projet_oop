@@ -37,10 +37,5 @@ public class CreerLocation extends JPanel {
 		}else {
 			button = new JButton("Chercher");
 		}
-		
-		
-		
-		
 	}
-
 }

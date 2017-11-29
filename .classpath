@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Interface"/>
+	<classpathentry kind="src" path="Livrable1/Interface"/>
+	<classpathentry kind="src" path="Livrable1/Objets"/>
+	<classpathentry kind="src" path="Objets"/>
+	<classpathentry kind="src" path="UI/Modelisation/src"/>
+	<classpathentry kind="output" path="UI/Modelisation/bin"/>
+</classpath>
