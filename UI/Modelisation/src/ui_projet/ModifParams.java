@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+@SuppressWarnings("serial")
 public class ModifParams extends JPanel {
 	private JFrame main;
 
@@ -25,7 +26,6 @@ public class ModifParams extends JPanel {
 		frame.add(this);
 		main = frame;
 		initComponents();
-
 	}
 
 	private void initComponents() {
@@ -62,17 +62,19 @@ public class ModifParams extends JPanel {
 			}
 		});
 	}
+
 	protected void save() {
-		//SAVE DATA
+		// SAVE DATA
 		cancel();
-		
+
 	}
+
 	private void cancel() {
 		main.remove(this);
 		MenuOption menu = new MenuOption(main, true);
 		SwingUtilities.updateComponentTreeUI(main);
 	}
-	
+
 	private int[] getDataDB() {
 		int[] data = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		return data;
