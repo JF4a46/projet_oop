@@ -6,7 +6,7 @@ import controlers.ClientController;
 
 public final class Magasin {
 
-	private static RegistreLocation registre = new RegistreLocation();;
+	private static RegistreLocation registre = new RegistreLocation();
 
 	private Magasin() {
 
