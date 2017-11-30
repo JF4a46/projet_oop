@@ -24,11 +24,9 @@ public class CreerLocation extends JPanel {
 		current = this;
 		frame.add(this);
 		main = frame;
-
 	}
 
 	public void initComponents(boolean admin, boolean nouvClient) {
-
 		text = new JLabel("Entrer le nom du client");
 		firstName = new defaultTextField("Prenom");
 		lastName = new defaultTextField("Nom de famille");

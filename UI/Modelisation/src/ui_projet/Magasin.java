@@ -5,7 +5,6 @@ import models.ParametresFacturation;
 import controlers.ClientController;
 
 public final class Magasin {
-
 	private static RegistreLocation registre = new RegistreLocation();
 
 	private Magasin() {
@@ -16,8 +15,8 @@ public final class Magasin {
 		registre.createVehicule(type, id, km, classe);
 	}
 
-	public static void removeVehicule() {
-		// Chercher vehicule et effacer
+	public static void removeVehicule(int id) {
+		registre.removeVehicule(id);
 	}
 
 	public static void createLocation(int clientIndex) {
