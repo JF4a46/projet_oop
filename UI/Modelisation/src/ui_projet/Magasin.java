@@ -28,11 +28,12 @@ public final class Magasin {
 	}
 
 	public static void savegarderNouveauParametres(ParametresFacturation params) {
-		// DB save params
+		System.out.println(params.getClasseEconomique());
+		registre.setParams(params);
 	}
 
 	public static ParametresFacturation getCurrentParametres() {
-		// return DB.getParametes;
-		return null;
+
+		return registre.getParametres();
 	}
 }

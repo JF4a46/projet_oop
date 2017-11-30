@@ -2,6 +2,7 @@ package ui_projet;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,9 +17,9 @@ import models.ParametresFacturation;
 public class ModifParams extends JPanel {
 
 	private JFrame main;
-	String[] info = { "Classe economique", "Classe moyenne", "Classe de luxe", "Classe utilitaire", "Assurance",
-			"Cout km", "Minimum Kilo", "Forfait illimite KM", "Frais de retard %", "Taxe provinciale", "Taxe federFale",
-			"Cout litre d'essence" };
+	String[] info = { "Classe economique", "Classe moyenne", "Classe confort", "Classe de luxe", "Classe utilitaire",
+			"Assurance", "Cout km", "Minimum Kilo", "Forfait illimite KM", "Frais de retard %", "Taxe provinciale",
+			"Taxe federFale", "Cout litre d'essence" };
 	String[] textBouton = { "Retour", "Sauvegarder" };
 	JLabel[] arrayLab = new JLabel[info.length];
 	JTextField[] arrayText = new JTextField[info.length];
@@ -41,13 +42,20 @@ public class ModifParams extends JPanel {
 			add(boutons[i]);
 		}
 
-		int[] dataDB = getDataDB();
+		ArrayList<Integer> entiers = Magasin.getCurrentParametres().getPricesInteger();
+		ArrayList<Double> doubles = Magasin.getCurrentParametres().getInfoDoubles();
+
 		for (int i = 0; i < arrayLab.length; i++) {
 			arrayLab[i] = new JLabel(info[i]);
 			arrayText[i] = new JTextField();
-			arrayText[i].setText("" + dataDB[i]);
-			arrayLab[i].setBounds(50, 30 * i + 30, 130, 25);
-			arrayText[i].setBounds(200, 30 * i + 30, 150, 25);
+
+			if (i < entiers.size()) {
+				arrayText[i].setText("" + entiers.get(i));
+			} else
+				arrayText[i].setText("" + doubles.get(i - (entiers.size())));
+
+			arrayLab[i].setBounds(50, 30 * i + 20, 130, 25);
+			arrayText[i].setBounds(200, 30 * i + 20, 150, 25);
 			add(arrayLab[i]);
 			add(arrayText[i]);
 
@@ -70,9 +78,11 @@ public class ModifParams extends JPanel {
 		JTextField[] a = arrayText;
 		params = new ParametresFacturation(Integer.parseInt(a[0].getText()), Integer.parseInt(a[1].getText()),
 				Integer.parseInt(a[2].getText()), Integer.parseInt(a[3].getText()), Integer.parseInt(a[4].getText()),
-				Integer.parseInt(a[5].getText()), Integer.parseInt(a[6].getText()), Integer.parseInt(a[7].getText()),
-				Integer.parseInt(a[8].getText()), Integer.parseInt(a[9].getText()), Integer.parseInt(a[10].getText()),
-				Integer.parseInt(a[11].getText()));
+				Double.parseDouble(a[5].getText()), Double.parseDouble(a[6].getText()),
+				(int) Double.parseDouble(a[7].getText()), Double.parseDouble(a[8].getText()),
+				Double.parseDouble(a[9].getText()), Double.parseDouble(a[10].getText()),
+				Double.parseDouble(a[11].getText()),Double.parseDouble(a[12].getText()));
+		System.out.println(params);
 		Magasin.savegarderNouveauParametres(params);
 		close();
 	}
@@ -83,8 +93,9 @@ public class ModifParams extends JPanel {
 		SwingUtilities.updateComponentTreeUI(main);
 	}
 
-	private int[] getDataDB() {
-		int[] data = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		return data;
+	private void setData() {
+		ParametresFacturation params = Magasin.getCurrentParametres();
+
+		return;
 	}
 }

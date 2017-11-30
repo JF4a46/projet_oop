@@ -16,7 +16,7 @@ public class SqlDao {
 	}
 
 	private Connection connection;
-	private static String url = "jdbc:sqlite:/home/zero/Programming/projet_oop/UI/Modelisation/agence.db";
+	private static String url = "jdbc:sqlite:C:\\Users\\FillionJ\\eclipse-workspace\\projet_oop\\UI\\Modelisation\\agence.db";
 
 	private SqlDao() {
 		try {

@@ -1,15 +1,73 @@
 package models;
 
-public class ParametresFacturation {
-	private int classeEconomique, classeMoyenne, classeLuxe, classeUtilitaire, assurance, coutkm, minimumKilo,
-			forfaitIllimiteKM, retardPoucent, taxeProvinciale, taxeFederale, litreEssence;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
-	public ParametresFacturation(int classeEconomique, int classeMoyenne, int classeLuxe, int classeUtilitaire,
-			int assurance, int coutkm, int minimumKilo, int forfaitIllimiteKM, int retardPoucent, int taxeProvinciale,
-			int taxeFederale, int litreEssence) {
+public class ParametresFacturation {
+	private int classeEconomique, classeMoyenne, classeConfort, classeLuxe, classeUtilitaire;
+
+	private double assurance, coutkm, minimumKilo, forfaitIllimiteKM, retardPoucent, taxeProvinciale, taxeFederale,
+			litreEssence;
+
+	public ParametresFacturation() {
+		loadFromFile();
+	}
+
+	public void writeToFile() {
+		System.out.println(this);
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("parametres.txt", "UTF-8");
+			writer.println(classeEconomique + "," + classeMoyenne + "," + classeConfort + "," + classeLuxe + ","
+					+ classeUtilitaire + "," + assurance + "," + coutkm + "," + minimumKilo + "," + forfaitIllimiteKM
+					+ "," + retardPoucent + "," + taxeProvinciale + "," + taxeFederale + "," + litreEssence);
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void loadFromFile() {
+		String array = null;
+		try (BufferedReader br = new BufferedReader(new FileReader("parametres.txt"))) {
+			array = br.readLine();
+			// System.out.println(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String[] data = array.split(",");
+		System.out.println(data[0]);
+		classeEconomique = Integer.parseInt(data[0]);
+		classeMoyenne = Integer.parseInt(data[1]);
+		classeConfort = Integer.parseInt(data[2]);
+		classeLuxe = Integer.parseInt(data[3]);
+		classeUtilitaire = Integer.parseInt(data[4]);
+		assurance = Double.parseDouble(data[5]);
+		coutkm = Double.parseDouble(data[6]);
+		minimumKilo = Double.parseDouble(data[7]);
+		forfaitIllimiteKM = Double.parseDouble(data[8]);
+		retardPoucent = Double.parseDouble(data[9]);
+		taxeProvinciale = Double.parseDouble(data[10]);
+		taxeFederale = Double.parseDouble(data[11]);
+		litreEssence = Double.parseDouble(data[12]);
+	}
+
+	public ParametresFacturation(int classeEconomique, int classeMoyenne, int classeConfort, int classeLuxe,
+			int classeUtilitaire, double assurance, double coutkm, int minimumKilo, double forfaitIllimiteKM,
+			double retardPoucent, double taxeProvinciale, double taxeFederale, double litreEssence) {
 		this.classeEconomique = classeEconomique;
 		this.classeMoyenne = classeMoyenne;
 		this.classeLuxe = classeLuxe;
+		this.setClasseConfort(classeConfort);
 		this.classeUtilitaire = classeUtilitaire;
 		this.assurance = assurance;
 		this.coutkm = coutkm;
@@ -19,14 +77,33 @@ public class ParametresFacturation {
 		this.taxeProvinciale = taxeProvinciale;
 		this.taxeFederale = taxeFederale;
 		this.litreEssence = litreEssence;
+		loadFromFile();
 	}
 
-	public String toString() {
-		return "ParamètresFacturation [classeEconomique=" + classeEconomique + ", classeMoyenne=" + classeMoyenne
-				+ ", classeLuxe=" + classeLuxe + ", classeUtilitaire=" + classeUtilitaire + ", assurance=" + assurance
-				+ ", coutkm=" + coutkm + ", minimumKilo=" + minimumKilo + ", forfaitIllimiteKM=" + forfaitIllimiteKM
-				+ ", retardPoucent=" + retardPoucent + ", taxeProvinciale=" + taxeProvinciale + ", taxeFederale="
-				+ taxeFederale + ", litreEssence=" + litreEssence + "]";
+	public ArrayList<Integer> getPricesInteger() {
+		ArrayList<Integer> prices = new ArrayList<Integer>();
+		prices.add(classeEconomique);
+		prices.add(classeMoyenne);
+		prices.add(classeConfort);
+		prices.add(classeLuxe);
+		prices.add(classeUtilitaire);
+
+		return prices;
+	}
+
+	public ArrayList<Double> getInfoDoubles() {
+		ArrayList<Double> params = new ArrayList<Double>();
+
+		params.add(assurance);
+		params.add(coutkm);
+		params.add(minimumKilo);
+		params.add(forfaitIllimiteKM);
+		params.add(retardPoucent);
+		params.add(taxeProvinciale);
+		params.add(taxeFederale);
+		params.add(litreEssence);
+
+		return params;
 	}
 
 	public int getClasseEconomique() {
@@ -61,67 +138,75 @@ public class ParametresFacturation {
 		this.classeUtilitaire = classeUtilitaire;
 	}
 
-	public int getAssurance() {
+	public int getClasseConfort() {
+		return classeConfort;
+	}
+
+	public void setClasseConfort(int classeConfort) {
+		this.classeConfort = classeConfort;
+	}
+
+	public double getAssurance() {
 		return assurance;
 	}
 
-	public void setAssurance(int assurance) {
+	public void setAssurance(double assurance) {
 		this.assurance = assurance;
 	}
 
-	public int getCoutkm() {
+	public double getCoutkm() {
 		return coutkm;
 	}
 
-	public void setCoutkm(int coutkm) {
+	public void setCoutkm(double coutkm) {
 		this.coutkm = coutkm;
 	}
 
-	public int getMinimumKilo() {
+	public double getMinimumKilo() {
 		return minimumKilo;
 	}
 
-	public void setMinimumKilo(int minimumKilo) {
+	public void setMinimumKilo(double minimumKilo) {
 		this.minimumKilo = minimumKilo;
 	}
 
-	public int getForfaitIllimiteKM() {
+	public double getForfaitIllimiteKM() {
 		return forfaitIllimiteKM;
 	}
 
-	public void setForfaitIllimiteKM(int forfaitIllimiteKM) {
+	public void setForfaitIllimiteKM(double forfaitIllimiteKM) {
 		this.forfaitIllimiteKM = forfaitIllimiteKM;
 	}
 
-	public int getRetardPoucent() {
+	public double getRetardPoucent() {
 		return retardPoucent;
 	}
 
-	public void setRetardPoucent(int retardPoucent) {
+	public void setRetardPoucent(double retardPoucent) {
 		this.retardPoucent = retardPoucent;
 	}
 
-	public int getTaxeProvinciale() {
+	public double getTaxeProvinciale() {
 		return taxeProvinciale;
 	}
 
-	public void setTaxeProvinciale(int taxeProvinciale) {
+	public void setTaxeProvinciale(double taxeProvinciale) {
 		this.taxeProvinciale = taxeProvinciale;
 	}
 
-	public int getTaxeFederale() {
+	public double getTaxeFederale() {
 		return taxeFederale;
 	}
 
-	public void setTaxeFederale(int taxeFederale) {
+	public void setTaxeFederale(double taxeFederale) {
 		this.taxeFederale = taxeFederale;
 	}
 
-	public int getLitreEssence() {
+	public double getLitreEssence() {
 		return litreEssence;
 	}
 
-	public void setLitreEssence(int litreEssence) {
+	public void setLitreEssence(double litreEssence) {
 		this.litreEssence = litreEssence;
 	}
 
