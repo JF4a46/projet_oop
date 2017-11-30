@@ -14,9 +14,9 @@ import javax.swing.SwingUtilities;
 public class ModifParams extends JPanel {
 	private JFrame main;
 
-	String[] info = { "Classe économique", "Classe moyenne", "Classe de luxe", "Classe utilitaire", "Assurance",
-			"Coût km", "Minimum Kilo", "Forfait illimité KM", "Frais de retard %", "Taxe provinciale", "Taxe fédérale",
-			"Coût litre d'essence" };
+	String[] info = { "Classe economique", "Classe moyenne", "Classe de luxe", "Classe utilitaire", "Assurance",
+			"Cout km", "Minimum Kilo", "Forfait illimite KM", "Frais de retard %", "Taxe provinciale", "Taxe federFale",
+			"Cout litre d'essence" };
 	String[] textBouton = { "Retour", "Sauvegarder" };
 
 	public ModifParams(JFrame frame) {
