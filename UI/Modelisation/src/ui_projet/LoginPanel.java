@@ -1,5 +1,7 @@
 package ui_projet;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
@@ -38,10 +40,8 @@ public class LoginPanel extends JPanel {
 		password.setText("test");
 		
 		
-		login.addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
+		login.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
 				if (username.getText().equals("JM") && password.getText().equals("test")) {
 					//current.setVisible(false);
 					main.remove(current);
@@ -58,30 +58,6 @@ public class LoginPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Identificateurs incorrects", "Erreur",
                             JOptionPane.ERROR_MESSAGE);
 					
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 			
