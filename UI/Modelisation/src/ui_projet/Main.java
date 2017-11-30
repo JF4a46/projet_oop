@@ -9,7 +9,7 @@ import controlers.ClientController;
 
 public class Main extends JFrame {
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ClientController cc = new ClientController();
 		cc.creerClient(1, "Tanguay", "Marie", "1111111113","2222222222", "3333333333",new Date(), "mh@hotmail.com", "9 Gatineau", "TANM", "A5");
 		System.out.println("Voici l'id du client : ");
@@ -18,9 +18,9 @@ public class Main extends JFrame {
 			System.out.println("ID : " + i);
 		}
 	}
+	*/
 	
-	
-	public static void main1(String[] args) {
+	public static void main(String[] args) {
 		
 		JFrame location = new JFrame("Service de Location");
 		location.setLayout(new BorderLayout());

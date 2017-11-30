@@ -34,7 +34,10 @@ public class LoginPanel extends JPanel {
 		this.add(username);
 		this.add(password);
 		this.add(login);
-
+		username.setText("JM");
+		password.setText("test");
+		
+		
 		login.addMouseListener(new MouseListener(){
 
 			@Override

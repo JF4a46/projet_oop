@@ -10,14 +10,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import models.ParametresFacturation;
+
 @SuppressWarnings("serial")
 public class ModifParams extends JPanel {
-	private JFrame main;
 
+	private JFrame main;
 	String[] info = { "Classe economique", "Classe moyenne", "Classe de luxe", "Classe utilitaire", "Assurance",
 			"Cout km", "Minimum Kilo", "Forfait illimite KM", "Frais de retard %", "Taxe provinciale", "Taxe federFale",
 			"Cout litre d'essence" };
 	String[] textBouton = { "Retour", "Sauvegarder" };
+	JLabel[] arrayLab = new JLabel[info.length];
+	JTextField[] arrayText = new JTextField[info.length];
+	JButton[] boutons = new JButton[2];
 
 	public ModifParams(JFrame frame) {
 		setBounds(100, 100, 500, 500);
@@ -29,9 +34,6 @@ public class ModifParams extends JPanel {
 	}
 
 	private void initComponents() {
-		JLabel[] arrayLab = new JLabel[info.length];
-		JTextField[] arrayText = new JTextField[info.length];
-		JButton[] boutons = new JButton[2];
 
 		for (int i = 0; i < boutons.length; i++) {
 			boutons[i] = new JButton(textBouton[i]);
@@ -52,7 +54,7 @@ public class ModifParams extends JPanel {
 		}
 		boutons[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cancel();
+				close();
 			}
 		});
 
@@ -64,12 +66,18 @@ public class ModifParams extends JPanel {
 	}
 
 	protected void save() {
-		// SAVE DATA
-		cancel();
-
+		ParametresFacturation params;
+		JTextField[] a = arrayText;
+		params = new ParametresFacturation(Integer.parseInt(a[0].getText()), Integer.parseInt(a[1].getText()),
+				Integer.parseInt(a[2].getText()), Integer.parseInt(a[3].getText()), Integer.parseInt(a[4].getText()),
+				Integer.parseInt(a[5].getText()), Integer.parseInt(a[6].getText()), Integer.parseInt(a[7].getText()),
+				Integer.parseInt(a[8].getText()), Integer.parseInt(a[9].getText()), Integer.parseInt(a[10].getText()),
+				Integer.parseInt(a[11].getText()));
+		Magasin.savegarderNouveauParametres(params);
+		close();
 	}
 
-	private void cancel() {
+	private void close() {
 		main.remove(this);
 		MenuOption menu = new MenuOption(main, true);
 		SwingUtilities.updateComponentTreeUI(main);
