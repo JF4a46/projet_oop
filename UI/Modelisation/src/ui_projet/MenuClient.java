@@ -1,7 +1,5 @@
 package ui_projet;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
@@ -51,22 +49,72 @@ public class MenuClient extends JPanel {
 		this.add(button);
 		this.add(menu);
 		
-		button.addActionListener(new ActionListener() {
+		button.addMouseListener(new MouseListener() {
 
-		
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void mouseClicked(MouseEvent arg0) {
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
 			}
 			
 		});
 		
-		menu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		menu.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
 				main.remove(current);
 				MenuOption menu = new MenuOption(main, admin);
 				SwingUtilities.updateComponentTreeUI(main);
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 			
 		});
