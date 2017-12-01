@@ -108,7 +108,7 @@ public class addVehicule extends JPanel {
 
 		type.setBounds(50, 20, 180, 30);
 		price.setBounds(50, 60, 180, 30);
-		menu.setBounds(50, 400, 180, 30);
+		menu.setBounds(20, 400, 130, 30);
 		add.setBounds(50, 260, 100, 30);
 		remove.setBounds(200, 260, 100, 30);
 		info.setBounds(350, 260, 100, 30);
@@ -119,6 +119,7 @@ public class addVehicule extends JPanel {
 		 * this.add(type); this.add(price); this.add(menu); this.add(add);
 		 * this.add(remove); this.add(info); this.add(listScroller);
 		 */
+		this.add(menu);
 
 		add.addMouseListener(new MouseListener() {
 

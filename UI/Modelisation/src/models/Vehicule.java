@@ -1,20 +1,34 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Vehicule {
-	String type;
-	int km, classe;
-	String immatriculation;
-	ArrayList<Date> debutLocation = new ArrayList<Date>();
-	ArrayList<Date> finLocation = new ArrayList<Date>();
+	private String type;
+
+	private int km, classe;
+	private String immatriculation;
+	private ArrayList<String> debutLocation = new ArrayList<String>();
+	private ArrayList<String> finLocation = new ArrayList<String>();
 
 	public Vehicule(String type, String imma, int km, int classe) {
 		this.type = type;
 		this.immatriculation = imma;
 		this.km = km;
 		this.classe = classe;
+	}
+
+	// format data = YYYY/MM/JJ
+	public void addIndisponiblePeriod(String start, String end) {
+		debutLocation.add(start);
+		finLocation.add(end);
+	}
+
+	public boolean isVehiculeDisponible(Calendar start, Calendar end) {
+
+		System.out.println(start.getTime().toString());
+
+		return false;
 	}
 
 	public String getType() {
@@ -47,6 +61,22 @@ public class Vehicule {
 
 	public void setClasse(int classe) {
 		this.classe = classe;
+	}
+
+	public ArrayList<String> getDebutLocation() {
+		return debutLocation;
+	}
+
+	public void setDebutLocation(ArrayList<String> debutLocation) {
+		this.debutLocation = debutLocation;
+	}
+
+	public ArrayList<String> getFinLocation() {
+		return finLocation;
+	}
+
+	public void setFinLocation(ArrayList<String> finLocation) {
+		this.finLocation = finLocation;
 	}
 
 }

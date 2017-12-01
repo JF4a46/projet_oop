@@ -38,6 +38,7 @@ public class MenuOption extends JPanel {
 
 		crLocation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Magasin.createLocation(0);
 				main.remove(current);
 				MenuClient create = new MenuClient(main, admin, true);
 				SwingUtilities.updateComponentTreeUI(main);
