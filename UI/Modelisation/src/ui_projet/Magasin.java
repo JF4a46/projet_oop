@@ -11,12 +11,16 @@ public final class Magasin {
 
 	}
 
-	public static void createVehicule(String type, int id, int km, int classe) {
+	public static void getVehicules() {
+		// registre.getVehicule();
+	}
+
+	public static void createVehicule(String type, String id, int km, int classe) {
 		registre.createVehicule(type, id, km, classe);
 	}
 
-	public static void removeVehicule(int id) {
-		registre.removeVehicule(id);
+	public static boolean removeVehicule(String string) {
+		return registre.removeVehicule(string);
 	}
 
 	public static void createLocation(int clientIndex) {
@@ -28,12 +32,16 @@ public final class Magasin {
 	}
 
 	public static void savegarderNouveauParametres(ParametresFacturation params) {
-		System.out.println(params.getClasseEconomique());
 		registre.setParams(params);
 	}
 
 	public static ParametresFacturation getCurrentParametres() {
 
 		return registre.getParametres();
+	}
+
+	public static void wakeUp() {
+		// TODO Auto-generated method stub
+
 	}
 }

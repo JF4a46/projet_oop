@@ -82,7 +82,7 @@ public class ModifParams extends JPanel {
 				(int) Double.parseDouble(a[7].getText()), Double.parseDouble(a[8].getText()),
 				Double.parseDouble(a[9].getText()), Double.parseDouble(a[10].getText()),
 				Double.parseDouble(a[11].getText()),Double.parseDouble(a[12].getText()));
-		System.out.println(params);
+		
 		Magasin.savegarderNouveauParametres(params);
 		close();
 	}

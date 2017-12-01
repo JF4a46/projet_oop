@@ -65,9 +65,11 @@ public class MenuOption extends JPanel {
 
 		modParametre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				main.remove(current);
 				ModifParams params = new ModifParams(main);
 				SwingUtilities.updateComponentTreeUI(main);
+
 			}
 
 		});

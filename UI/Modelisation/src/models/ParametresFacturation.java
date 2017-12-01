@@ -18,7 +18,6 @@ public class ParametresFacturation {
 	}
 
 	public void writeToFile() {
-		System.out.println(this);
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter("parametres.txt", "UTF-8");
@@ -40,12 +39,10 @@ public class ParametresFacturation {
 		String array = null;
 		try (BufferedReader br = new BufferedReader(new FileReader("parametres.txt"))) {
 			array = br.readLine();
-			// System.out.println(array);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		String[] data = array.split(",");
-		System.out.println(data[0]);
 		classeEconomique = Integer.parseInt(data[0]);
 		classeMoyenne = Integer.parseInt(data[1]);
 		classeConfort = Integer.parseInt(data[2]);
@@ -77,7 +74,6 @@ public class ParametresFacturation {
 		this.taxeProvinciale = taxeProvinciale;
 		this.taxeFederale = taxeFederale;
 		this.litreEssence = litreEssence;
-		loadFromFile();
 	}
 
 	public ArrayList<Integer> getPricesInteger() {

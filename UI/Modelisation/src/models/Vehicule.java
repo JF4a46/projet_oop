@@ -1,21 +1,20 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Vehicule {
 	String type;
-	int id, km, classe;
-	boolean dispo;
-	
-	Date debut, fin;
-	
-	public Vehicule(String type, int id, int km, int classe, boolean dispo) {
-		super();
+	int km, classe;
+	String immatriculation;
+	ArrayList<Date> debutLocation = new ArrayList<Date>();
+	ArrayList<Date> finLocation = new ArrayList<Date>();
+
+	public Vehicule(String type, String imma, int km, int classe) {
 		this.type = type;
-		this.id = id;
+		this.immatriculation = imma;
 		this.km = km;
 		this.classe = classe;
-		this.dispo = dispo;
 	}
 
 	public String getType() {
@@ -26,12 +25,12 @@ public class Vehicule {
 		this.type = type;
 	}
 
-	public int getId() {
-		return id;
+	public String getImmatriculation() {
+		return immatriculation;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setImmatriculation(String immatriculation) {
+		this.immatriculation = immatriculation;
 	}
 
 	public int getKm() {

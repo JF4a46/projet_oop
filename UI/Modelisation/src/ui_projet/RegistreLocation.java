@@ -14,12 +14,13 @@ public class RegistreLocation {
 	private ArrayList<Location> locations = new ArrayList<Location>();
 
 	public RegistreLocation() {
-		System.out.println("run");
 		params = new ParametresFacturation();
+		loadVehicules();
 	}
 
-	public void createVehicule(String type, int id, int km, int classe) {
-		vehicules.add(new Vehicule(type, id, km, classe, true));
+	public void createVehicule(String type, String id, int km, int classe) {
+		vehicules.add(new Vehicule(type, id, km, classe));
+		writeVehicules();
 	}
 
 	public ParametresFacturation getParams() {
@@ -27,12 +28,13 @@ public class RegistreLocation {
 	}
 
 	public void setParams(ParametresFacturation params) {
-		
+
 		this.params = params;
-		System.out.println(params.getClasseEconomique());
+		this.params.writeToFile();
 	}
 
 	public ArrayList<Vehicule> getVehiculeDisponible() {
+
 		return vehicules;
 	}
 
@@ -51,19 +53,48 @@ public class RegistreLocation {
 
 	}
 
-	public void removeVehicule(int id) {
+	public boolean removeVehicule(String id) {
 		int index = -1;
 		for (int i = 0; i < vehicules.size(); i++) {
-			if (vehicules.get(i).getId() == id) {
+			System.out.println(vehicules.get(i).getImmatriculation());
+			System.out.println(id.toUpperCase());
+			if (vehicules.get(i).getImmatriculation().equals(id.toUpperCase())) {
 				index = i;
 			}
 		}
-		if (index != -1)
+		if (index != -1) {
 			vehicules.remove(index);
+			writeVehicules();
+			return true;
+		} else
+			return false;
+
 	}
 
 	public ParametresFacturation getParametres() {
-		// TODO Auto-generated method stub
 		return params;
 	}
+
+	public void loadVehicules() {
+		ArrayList<String> bruteData = DbFileSystem.loadFromFile("vehicules.txt");
+		
+		vehicules = new ArrayList<Vehicule>();
+		
+		for (int i = 0; i < bruteData.size(); i++) {
+			String[] data = bruteData.get(i).split(",");
+			System.out.println(java.util.Arrays.toString(data));
+			vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
+		}
+	}
+
+	public void writeVehicules() {
+		String toWrite = "";
+
+		for (int i = 0; i < vehicules.size(); i++) {
+			toWrite += vehicules.get(i).getType() + "," + vehicules.get(i).getImmatriculation().toUpperCase() + ","
+					+ vehicules.get(i).getKm() + "," + vehicules.get(i).getClasse() + "\n";
+		}
+		DbFileSystem.writeToFile("vehicules.txt", toWrite);
+	}
+
 }
