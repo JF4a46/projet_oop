@@ -1,6 +1,7 @@
 package ui_projet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import models.Client;
 import models.Location;
@@ -51,13 +52,12 @@ public class RegistreLocation {
 
 	public void createLocation() {
 
+		vehicules.get(0).addIndisponiblePeriod("2017/09/07", "2017/09/30");
 	}
 
 	public boolean removeVehicule(String id) {
 		int index = -1;
 		for (int i = 0; i < vehicules.size(); i++) {
-			System.out.println(vehicules.get(i).getImmatriculation());
-			System.out.println(id.toUpperCase());
 			if (vehicules.get(i).getImmatriculation().equals(id.toUpperCase())) {
 				index = i;
 			}
@@ -77,13 +77,15 @@ public class RegistreLocation {
 
 	public void loadVehicules() {
 		ArrayList<String> bruteData = DbFileSystem.loadFromFile("vehicules.txt");
-		
+
 		vehicules = new ArrayList<Vehicule>();
-		
+
 		for (int i = 0; i < bruteData.size(); i++) {
-			String[] data = bruteData.get(i).split(",");
-			System.out.println(java.util.Arrays.toString(data));
-			vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
+			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
+				String[] data = bruteData.get(i).split(",");
+				System.out.println(java.util.Arrays.toString(data));
+				vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
+			}
 		}
 	}
 
@@ -91,8 +93,22 @@ public class RegistreLocation {
 		String toWrite = "";
 
 		for (int i = 0; i < vehicules.size(); i++) {
+			System.out.println(vehicules.get(i).getDebutLocation().toString());
+			if (i != 0)
+				toWrite += "\n";
+
 			toWrite += vehicules.get(i).getType() + "," + vehicules.get(i).getImmatriculation().toUpperCase() + ","
-					+ vehicules.get(i).getKm() + "," + vehicules.get(i).getClasse() + "\n";
+					+ vehicules.get(i).getKm() + "," + vehicules.get(i).getClasse();
+
+			if (vehicules.get(i).getDebutLocation().size() > 0 && vehicules.get(i).getFinLocation().size() > 0) {
+				toWrite += ",dates,";
+
+				for (int j = 0; i < vehicules.get(i).getDebutLocation().size(); j++) {
+					
+		  		}
+
+			}
+
 		}
 		DbFileSystem.writeToFile("vehicules.txt", toWrite);
 	}
