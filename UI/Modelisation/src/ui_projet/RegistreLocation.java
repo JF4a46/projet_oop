@@ -41,6 +41,7 @@ public class RegistreLocation {
 
 		for (int i = 0; i < vehicules.size(); i++) {
 			if (vehicules.get(i).isVehiculeDisponible(start, end)) {
+				System.out.println("Index " + i);
 				dispo.add(vehicules.get(i));
 			}
 		}
@@ -59,17 +60,24 @@ public class RegistreLocation {
 		return resultats;
 	}
 
-	public Calendar makeCalendar(int[] date) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(date[0], date[1], date[2], date[3], 0);
-
-		return cal;
+	public void rendreVehiculeNonDisponible(int[] dateDebut, int[] dateFin, String immatriculation) {
+		for (int i = 0; i < vehicules.size(); i++) {
+			if (vehicules.get(i).getImmatriculation().equals(immatriculation))
+				vehicules.get(i).addIndisponiblePeriod(Magasin.makeCalendar(dateDebut), Magasin.makeCalendar(dateFin));
+		}
+		writeVehicules();
 	}
 
-	public void createLocation(int[] dateDebut, int[] dateFin) {
-		// vehicules.get(0).addIndisponiblePeriod(calDebut, calFin);
+	public void removeLocation(Calendar debut, Calendar fin, String immatriculation) {
+		for (int i = 0; i < vehicules.size(); i++) {
+			if (vehicules.get(i).getImmatriculation().equals(immatriculation)) {
+				vehicules.get(i).removeIndisponiblePeriod(debut, fin);
+				writeVehicules();
+				break;
+			}
 
-		writeVehicules();
+		}
+
 	}
 
 	public boolean removeVehicule(String id) {
@@ -100,26 +108,17 @@ public class RegistreLocation {
 		for (int i = 0; i < bruteData.size(); i++) {
 			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
 				String[] data = bruteData.get(i).split(",");
-
-				if(data.length <3){
-					continue;
-				}
-				System.out.println(java.util.Arrays.toString(data));
-
-				//System.out.println(java.util.Arrays.toString(data));
-
+				// System.out.println(java.util.Arrays.toString(data));
 				vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
 				if (data.length > 4) {
 					for (int j = 4; j < data.length; j++) {
 						String date[] = data[j].split("/");
 						String dateSplit[] = date[0].split(" ");
 						String dateSplit1[] = date[1].split(" ");
-
-						// System.out.println(java.util.Arrays.toString(dateSplit));
-						// System.out.println(java.util.Arrays.toString(dateSplit1));
 						Calendar start = Calendar.getInstance();
 						Calendar end = Calendar.getInstance();
-
+						start.setTimeInMillis(0);
+						end.setTimeInMillis(0);
 						start.set(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]),
 								Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[3]), 0);
 						end.set(Integer.parseInt(dateSplit1[0]), Integer.parseInt(dateSplit1[1]),

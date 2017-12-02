@@ -18,19 +18,38 @@ public class Vehicule {
 		this.classe = classe;
 	}
 
-	// format data = YYYY/MM/JJ
+	
 	public void addIndisponiblePeriod(Calendar calDebut, Calendar calFin) {
 		debutLocation.add(calDebut);
 		finLocation.add(calFin);
 	}
 
+	public void removeIndisponiblePeriod(Calendar calDebut, Calendar calFin) {	
+		for(int i = 0; i < debutLocation.size();i++) {
+			
+			if(debutLocation.get(i).compareTo(calDebut) == 0) {
+				System.out.println("here");
+				debutLocation.remove(i);
+				finLocation.remove(i);
+				
+			}
+		}
+		
+	}
+
 	public boolean isVehiculeDisponible(Calendar start, Calendar end) {
 
 		for (int i = 0; i < debutLocation.size(); i++) {
-			System.out.println(start.compareTo(debutLocation.get(i)));
-			System.out.println(start.compareTo(finLocation.get(i)));
-			System.out.println(end.compareTo(debutLocation.get(i)));
-			System.out.println(end.compareTo(finLocation.get(i)));
+
+			Integer[] indices = new Integer[4];
+			indices[0] = start.compareTo(debutLocation.get(i));
+			indices[1] = start.compareTo(finLocation.get(i));
+			indices[2] = end.compareTo(debutLocation.get(i));
+			indices[3] = end.compareTo(finLocation.get(i));
+
+			if (!(indices[0] == indices[1] && indices[0] == indices[2] && indices[0] == indices[3]))
+				return false;
+
 		}
 
 		return true;
