@@ -8,8 +8,8 @@ public class Vehicule {
 
 	private int km, classe;
 	private String immatriculation;
-	private ArrayList<String> debutLocation = new ArrayList<String>();
-	private ArrayList<String> finLocation = new ArrayList<String>();
+	private ArrayList<Calendar> debutLocation = new ArrayList<Calendar>();
+	private ArrayList<Calendar> finLocation = new ArrayList<Calendar>();
 
 	public Vehicule(String type, String imma, int km, int classe) {
 		this.type = type;
@@ -19,16 +19,21 @@ public class Vehicule {
 	}
 
 	// format data = YYYY/MM/JJ
-	public void addIndisponiblePeriod(String start, String end) {
-		debutLocation.add(start);
-		finLocation.add(end);
+	public void addIndisponiblePeriod(Calendar calDebut, Calendar calFin) {
+		debutLocation.add(calDebut);
+		finLocation.add(calFin);
 	}
 
 	public boolean isVehiculeDisponible(Calendar start, Calendar end) {
 
-		System.out.println(start.getTime().toString());
+		for (int i = 0; i < debutLocation.size(); i++) {
+			System.out.println(start.compareTo(debutLocation.get(i)));
+			System.out.println(start.compareTo(finLocation.get(i)));
+			System.out.println(end.compareTo(debutLocation.get(i)));
+			System.out.println(end.compareTo(finLocation.get(i)));
+		}
 
-		return false;
+		return true;
 	}
 
 	public String getType() {
@@ -63,19 +68,19 @@ public class Vehicule {
 		this.classe = classe;
 	}
 
-	public ArrayList<String> getDebutLocation() {
+	public ArrayList<Calendar> getDebutLocation() {
 		return debutLocation;
 	}
 
-	public void setDebutLocation(ArrayList<String> debutLocation) {
+	public void setDebutLocation(ArrayList<Calendar> debutLocation) {
 		this.debutLocation = debutLocation;
 	}
 
-	public ArrayList<String> getFinLocation() {
+	public ArrayList<Calendar> getFinLocation() {
 		return finLocation;
 	}
 
-	public void setFinLocation(ArrayList<String> finLocation) {
+	public void setFinLocation(ArrayList<Calendar> finLocation) {
 		this.finLocation = finLocation;
 	}
 

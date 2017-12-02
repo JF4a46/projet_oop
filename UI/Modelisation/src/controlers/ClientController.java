@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import daos.ClientDAO;
+import daos.ClientStatement;
 import models.Client;
 
 public class ClientController {
 
 	private ClientDAO clientDao;
+	private ClientStatement clientStatement;
 
 	public ClientController() {
 		this.clientDao = new ClientDAO();
+		this.clientStatement = new ClientStatement();
 	}
 
 	public void saveClient(Client client) {
-		this.clientDao.save(client);
+		//this.clientDao.save(client);
+		this.clientStatement.save(client);
 	}
 
 	public Client creerClient(int idClient, String nom, String prenom, String telephoneMaison, String cellulaire,
@@ -34,7 +38,8 @@ public class ClientController {
 	}
 
 	public ArrayList<Integer> searchClientIdByPhone(String telephone) {
-		return this.clientDao.getClientIdByPhone(telephone);
+		//return this.clientDao.getClientIdByPhone(telephone);
+		return this.clientStatement.getClientIdByPhone(telephone);
 	}
 
 }

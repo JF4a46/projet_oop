@@ -2,6 +2,9 @@ package ui_projet;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
+import javax.swing.DefaultButtonModel;
 
 import models.Client;
 import models.Location;
@@ -16,7 +19,7 @@ public class RegistreLocation {
 
 	public RegistreLocation() {
 		params = new ParametresFacturation();
-		loadVehicules();
+
 	}
 
 	public void createVehicule(String type, String id, int km, int classe) {
@@ -29,14 +32,20 @@ public class RegistreLocation {
 	}
 
 	public void setParams(ParametresFacturation params) {
-
 		this.params = params;
 		this.params.writeToFile();
 	}
 
-	public ArrayList<Vehicule> getVehiculeDisponible() {
+	public ArrayList<Vehicule> getVehiculeDisponible(Calendar start, Calendar end) {
+		ArrayList<Vehicule> dispo = new ArrayList<Vehicule>();
 
-		return vehicules;
+		for (int i = 0; i < vehicules.size(); i++) {
+			if (vehicules.get(i).isVehiculeDisponible(start, end)) {
+				dispo.add(vehicules.get(i));
+			}
+		}
+		return dispo;
+
 	}
 
 	public ArrayList<Client> searchClient(String param) {
@@ -50,9 +59,17 @@ public class RegistreLocation {
 		return resultats;
 	}
 
-	public void createLocation() {
+	public Calendar makeCalendar(int[] date) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(date[0], date[1], date[2], date[3], 0);
 
-		vehicules.get(0).addIndisponiblePeriod("2017/09/07", "2017/09/30");
+		return cal;
+	}
+
+	public void createLocation(int[] dateDebut, int[] dateFin) {
+		// vehicules.get(0).addIndisponiblePeriod(calDebut, calFin);
+
+		writeVehicules();
 	}
 
 	public boolean removeVehicule(String id) {
@@ -83,11 +100,35 @@ public class RegistreLocation {
 		for (int i = 0; i < bruteData.size(); i++) {
 			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
 				String[] data = bruteData.get(i).split(",");
+
 				if(data.length <3){
 					continue;
 				}
 				System.out.println(java.util.Arrays.toString(data));
+
+				//System.out.println(java.util.Arrays.toString(data));
+
 				vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
+				if (data.length > 4) {
+					for (int j = 4; j < data.length; j++) {
+						String date[] = data[j].split("/");
+						String dateSplit[] = date[0].split(" ");
+						String dateSplit1[] = date[1].split(" ");
+
+						// System.out.println(java.util.Arrays.toString(dateSplit));
+						// System.out.println(java.util.Arrays.toString(dateSplit1));
+						Calendar start = Calendar.getInstance();
+						Calendar end = Calendar.getInstance();
+
+						start.set(Integer.parseInt(dateSplit[0]), Integer.parseInt(dateSplit[1]),
+								Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[3]), 0);
+						end.set(Integer.parseInt(dateSplit1[0]), Integer.parseInt(dateSplit1[1]),
+								Integer.parseInt(dateSplit1[2]), Integer.parseInt(dateSplit1[3]), 0);
+
+						vehicules.get(i).addIndisponiblePeriod(start, end);
+					}
+				}
+
 			}
 		}
 	}
@@ -96,7 +137,7 @@ public class RegistreLocation {
 		String toWrite = "";
 
 		for (int i = 0; i < vehicules.size(); i++) {
-			System.out.println(vehicules.get(i).getDebutLocation().toString());
+
 			if (i != 0)
 				toWrite += "\n";
 
@@ -104,14 +145,21 @@ public class RegistreLocation {
 					+ vehicules.get(i).getKm() + "," + vehicules.get(i).getClasse();
 
 			if (vehicules.get(i).getDebutLocation().size() > 0 && vehicules.get(i).getFinLocation().size() > 0) {
-				toWrite += ",dates,";
+				toWrite += ",";
 
-				for (int j = 0; i < vehicules.get(i).getDebutLocation().size(); j++) {
-					
-		  		}
-
+				for (int j = 0; j < vehicules.get(i).getDebutLocation().size(); j++) {
+					toWrite += (vehicules.get(i).getDebutLocation().get(j).get(1) + " "
+							+ vehicules.get(i).getDebutLocation().get(j).get(2) + " "
+							+ vehicules.get(i).getDebutLocation().get(j).get(5) + " "
+							+ vehicules.get(i).getDebutLocation().get(j).get(11));
+					toWrite += "/";
+					toWrite += (vehicules.get(i).getFinLocation().get(j).get(1) + " "
+							+ vehicules.get(i).getFinLocation().get(j).get(2) + " "
+							+ vehicules.get(i).getFinLocation().get(j).get(5) + " "
+							+ vehicules.get(i).getFinLocation().get(j).get(11));
+					toWrite += ",";
+				}
 			}
-
 		}
 		DbFileSystem.writeToFile("vehicules.txt", toWrite);
 	}
