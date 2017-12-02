@@ -83,6 +83,9 @@ public class RegistreLocation {
 		for (int i = 0; i < bruteData.size(); i++) {
 			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
 				String[] data = bruteData.get(i).split(",");
+				if(data.length <3){
+					continue;
+				}
 				System.out.println(java.util.Arrays.toString(data));
 				vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
 			}

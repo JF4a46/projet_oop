@@ -19,6 +19,8 @@ public class Main extends JFrame {
 	 */
 
 	public static void main(String[] args) {
+		
+		
 		Magasin.wakeUp();
 		JFrame location = new JFrame("Service de Location");
 		location.setLayout(new BorderLayout());
