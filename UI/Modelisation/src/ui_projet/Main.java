@@ -20,6 +20,11 @@ public class Main extends JFrame {
 
 	public static void main(String[] args) {
 		Magasin.wakeUp();
+		Magasin.getVehiculesDisponible();
+		int[] dateDebut = { 2018, 9, 7, 13 };
+		int[] dateFin = { 2018, 10, 21, 12 };
+
+		// Magasin.createLocation(dateDebut, dateFin);
 		JFrame location = new JFrame("Service de Location");
 		location.setLayout(new BorderLayout());
 		location.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
