@@ -52,7 +52,7 @@ public class RegistreLocation {
 	public ArrayList<Client> searchClient(String param) {
 		ArrayList<Client> resultats = new ArrayList<>();
 		for (int i = 0; i < clients.size(); i++) {
-			if (clients.get(i).getTelephoneMaison().contains(param)) {
+			if (clients.get(i).getTelephone().contains(param)) {
 				resultats.add(clients.get(i));
 			}
 		}

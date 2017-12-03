@@ -92,8 +92,8 @@ public final class Magasin {
 		registre.removeLocation(debut, fin, immatriculation);
 	}
 
-	public static void searchClients() {
-
+	public static ArrayList<Client> searchClients(String param) {
+		return registre.searchClient(param);
 	}
 
 	public static void savegarderNouveauParametres(ParametresFacturation params) {

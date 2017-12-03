@@ -6,14 +6,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 
+import java.util.*;
+
 public class MenuClient extends JPanel {
 
 	private boolean admin, nouvClient;
 	private JLabel text;
-	private defaultTextField firstName, lastName;
+	private defaultTextField phoneNumber;
 	private JButton button, menu;
 	private JPanel current;
 	private JFrame main;
+	private Magasin magasin;
 
 	public MenuClient(JFrame frame, boolean admin, boolean nouvClient) {
 		setLayout(null);
@@ -29,9 +32,8 @@ public class MenuClient extends JPanel {
 
 	public void initComponents(boolean admin, boolean nouvClient) {
 
-		text = new JLabel("Entrer le nom du client");
-		firstName = new defaultTextField("Prenom");
-		lastName = new defaultTextField("Nom de famille");
+		text = new JLabel("Entrer le numero de telephone du client");
+		phoneNumber = new defaultTextField("Numero de telephone");
 		if (nouvClient) {
 			button = new JButton("Creer");
 		} else {
@@ -40,19 +42,28 @@ public class MenuClient extends JPanel {
 		menu = new JButton("Retour au menu");
 
 		text.setBounds(50, 20, 280, 30);
-		firstName.setBounds(50, 60, 180, 30);
-		lastName.setBounds(50, 100, 180, 30);
-		button.setBounds(50, 140, 100, 30);
+		phoneNumber.setBounds(50, 60, 180, 30);
+		button.setBounds(50, 100, 180, 30);
 		menu.setBounds(50, 400, 180, 30);
 
 		this.add(text);
-		this.add(firstName);
-		this.add(lastName);
+		this.add(phoneNumber);
 		this.add(button);
 		this.add(menu);
 
 		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+				{
+				boolean nouvClient;
+				main.remove(current);
+				if (Magasin.searchClients(phoneNumber.getText()).isEmpty()) {
+					nouvClient = true;
+					ClientInfo info = new ClientInfo(main, admin, nouvClient, phoneNumber.getText());
+				}else {
+					nouvClient = false;
+					ClientInfo info = new ClientInfo(main, admin, nouvClient, phoneNumber.getText());
+				}
+				SwingUtilities.updateComponentTreeUI(main);
 			}
 		});
 

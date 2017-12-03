@@ -7,6 +7,7 @@ public class Client {
 	private int idClient;
 	private String nom;
 	private String prenom;
+	private String telephone;
 	private String telephoneMaison;
 	private String cellulaire;
 	private Date dateNaissance;
@@ -15,6 +16,7 @@ public class Client {
 	private String permisConduire;
 	private String classeConduite;
 	private String telephoneBureau;
+	private Location location;
 	
 	public Client(int idClient, 
 			String nom, 
@@ -41,6 +43,16 @@ public class Client {
 		this.classeConduite = classeConduite;
 	}
 	
+	public Client(int idClient,	String nom, String prenom, String telephone, String permisConduire){
+		
+		this.idClient = idClient;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.telephone = telephone;
+		this.permisConduire = permisConduire;
+		this.location = new Location( new ParametresFacturation());
+	}
+	
 	public int getIdClient() {
 		return idClient;
 	}
@@ -65,6 +77,15 @@ public class Client {
 		this.prenom = prenom;
 	}
 
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	
 	public String getTelephoneMaison() {
 		return telephoneMaison;
 	}
@@ -129,4 +150,10 @@ public class Client {
 		this.classeConduite = classeConduite;
 	}
 	
+	public Location getLocation() {
+		return location;
+	}
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 }
