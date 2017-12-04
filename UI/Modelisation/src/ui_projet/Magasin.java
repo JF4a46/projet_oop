@@ -79,7 +79,7 @@ public final class Magasin {
 		return cal;
 	}
 
-	public static lon[] getDaysFromCalendars(Calendar start, Calendar end) {
+	public static long[] getDaysFromCalendars(Calendar start, Calendar end) {
 		int daysInMils = 86400000; 
 		long[] totalTimeReturn = new long[2];
 		
