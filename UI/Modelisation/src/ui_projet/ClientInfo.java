@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import models.Client;
+import models.Location;
 
 public class ClientInfo extends JPanel {
 
@@ -16,8 +19,8 @@ public class ClientInfo extends JPanel {
 	private JButton menu, save, change, infoLoc;
 	private JPanel current;
 	private JFrame main;
-	private String phone;
 	private Client client;
+	private Location location;
 
 	public void editable(boolean flag) {
 		firstNameF.setEditable(flag);
@@ -27,10 +30,8 @@ public class ClientInfo extends JPanel {
 	}
 
 	public ClientInfo(JFrame frame, boolean admin, boolean nouvClient, String phoneNumber) {
-		String phoneNum;
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
-		phoneNum = phoneNumber;
 		initComponents(admin, nouvClient, phoneNumber);
 		this.admin = admin;
 		this.nouvClient = nouvClient;
@@ -91,11 +92,11 @@ public class ClientInfo extends JPanel {
 		if (nouvClient) {
 			change.setVisible(false);
 		} else {
-			client = Magasin.searchClients(phoneNumberF.getText()).get(0);
+			client = Magasin.searchClients(phoneNumber).get(0);
 			firstNameF.setText(client.getPrenom());
 			lastNameF.setText(client.getNom());
 			licenseNumberF.setText(client.getPermisConduire());
-			locationNumberF.setText(""+client.getLocation().getNumID());
+			locationNumberF.setText(""+client.getLocationNum());
 			save.setVisible(false);
 			editable(false);
 
@@ -106,8 +107,12 @@ public class ClientInfo extends JPanel {
 				save.setVisible(false);
 				editable(false);
 				if (nouvClient) {
-					client  = new Client(0, lastNameF.getText(), firstNameF.getText(), phoneNumberF.getText(), licenseNumberF.getText());
-					locationNumberF.setText(""+ client.getLocation().getNumID());
+					Magasin.createClient(lastNameF.getText(), firstNameF.getText(), phoneNumberF.getText(), licenseNumberF.getText());
+					ArrayList<Client> clients = Magasin.searchClients(phoneNumber);
+					client = clients.get(0);
+					//client = Magasin.searchClients(phoneNumber).get(0); 
+					Magasin.createLocation(client);
+					locationNumberF.setText(""+client.getLocationNum());
 				}
 				else {
 					client.setNom(lastNameF.getText());
@@ -135,7 +140,7 @@ public class ClientInfo extends JPanel {
 		infoLoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				main.remove(current);
-				LocationInfo info = new LocationInfo(main, admin, nouvClient, client);
+				LocationInfo info = new LocationInfo(main, admin, nouvClient, client.getLocationNum());
 				SwingUtilities.updateComponentTreeUI(main);
 
 			}

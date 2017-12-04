@@ -26,12 +26,12 @@ public class ClientDAO {
 			PreparedStatement statement = this.sqlDao.getConnection().prepareStatement(insertQuerry);
 			statement.setString(1, client.getNom());
 			statement.setString(2, client.getPrenom());
-			statement.setString(3, client.getTelephoneMaison());
-			statement.setString(4, client.getCellulaire());
-			statement.setString(5, client.getTelephoneBureau());
-			statement.setDate(6, new Date(client.getDateNaissance().getTime()));
-			statement.setString(7, client.getCourriel());
-			statement.setString(8, client.getAdresse());
+//			statement.setString(3, client.getTelephoneMaison());
+//			statement.setString(4, client.getCellulaire());
+//			statement.setString(5, client.getTelephoneBureau());
+//			statement.setDate(6, new Date(client.getDateNaissance().getTime()));
+//			statement.setString(7, client.getCourriel());
+//			statement.setString(8, client.getAdresse());
 			statement.setString(9, client.getPermisConduire());
 			statement.execute();
 

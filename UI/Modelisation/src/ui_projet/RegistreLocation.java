@@ -19,7 +19,7 @@ public class RegistreLocation {
 
 	public RegistreLocation() {
 		params = new ParametresFacturation();
-
+		System.out.print("nouveau registre");
 	}
 
 	public void createVehicule(String type, String id, int km, int classe) {
@@ -36,7 +36,7 @@ public class RegistreLocation {
 		this.params.writeToFile();
 	}
 
-	public ArrayList<Vehicule> getVehiculeDisponible(Calendar start, Calendar end) {
+	public ArrayList<Vehicule> getVehiculeDisponible(Calendar start, Calendar end, int classe) {
 		ArrayList<Vehicule> dispo = new ArrayList<Vehicule>();
 
 		for (int i = 0; i < vehicules.size(); i++) {
@@ -49,11 +49,32 @@ public class RegistreLocation {
 
 	}
 
+	public void createClient(String nom, String prenom, String telephone, String permisConduire) {
+		System.out.println("Registre");
+		clients.add(new Client(nom, prenom, telephone, permisConduire));
+	}
+
 	public ArrayList<Client> searchClient(String param) {
-		ArrayList<Client> resultats = new ArrayList<>();
+		ArrayList<Client> resultats = new ArrayList<Client>();
 		for (int i = 0; i < clients.size(); i++) {
 			if (clients.get(i).getTelephone().contains(param)) {
 				resultats.add(clients.get(i));
+			}
+		}
+
+		return resultats;
+	}
+
+	public void createLocation(Client client) {
+		locations.add(new Location(client));
+	}
+
+	public ArrayList<Location> searchLocation(int param) {
+
+		ArrayList<Location> resultats = new ArrayList<>();
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getNumID() == param) {
+				resultats.add(locations.get(i));
 			}
 		}
 
@@ -68,14 +89,20 @@ public class RegistreLocation {
 		writeVehicules();
 	}
 
-	public void removeLocation(Calendar debut, Calendar fin, String immatriculation) {
+	public void removeLocation(int numID, Calendar debut, Calendar fin, String immatriculation) {
+		
 		for (int i = 0; i < vehicules.size(); i++) {
 			if (vehicules.get(i).getImmatriculation().equals(immatriculation)) {
 				vehicules.get(i).removeIndisponiblePeriod(debut, fin);
 				writeVehicules();
 				break;
 			}
-
+		}
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).getNumID() ==numID) {
+				locations.get(i).getClient().setLocationNum(0);
+				locations.remove(i);
+			}
 		}
 
 	}

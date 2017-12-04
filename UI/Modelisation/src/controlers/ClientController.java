@@ -22,12 +22,9 @@ public class ClientController {
 		this.clientStatement.save(client);
 	}
 
-	public Client creerClient(int idClient, String nom, String prenom, String telephoneMaison, String cellulaire,
-			String telephoneBureau, Date dateNaissance, String courriel, String adresse, String permisConduire,
-			String classeConduite) {
+	public Client creerClient(String nom, String prenom, String telephone, String permisConduire) {
 
-		Client client = new Client(idClient, nom, prenom, telephoneMaison, cellulaire, telephoneBureau, dateNaissance,
-				courriel, adresse, permisConduire, classeConduite);
+		Client client = new Client(nom, prenom, telephone, permisConduire);
 
 		this.saveClient(client);
 		return client;

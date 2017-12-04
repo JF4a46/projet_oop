@@ -2,6 +2,8 @@ package ui_projet;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,30 +12,33 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import models.Client;
 
+import models.Location;
+import models.Vehicule;
+
 public class LocationInfo extends JPanel{
 	private boolean admin, nouvClient;
-	private JLabel startDateL, dureeL, vehicTypeL, idVehicL, montantL, locationNumberL;
-	private JTextField startDateF, dureeF, idVehicF, montantF, locationNumberF;
+	private JLabel startDateL, endDateL, vehicTypeL, idVehicL, montantL, locationNumberL;
+	private JTextField startDateF, endDateF, idVehicF, montantF, locationNumberF;
 	private JComboBox<String> vehicTypeF;
 	private JButton menu, save, change, pay, end;
 	private JPanel current;
 	private JFrame main;
+	private Location location;
 	private Client client;
 
 	public void editable(boolean flag) {
 		startDateF.setEditable(flag);
-		dureeF.setEditable(flag);
-		//vehicTypeF.setEditable(flag);
-		//vehicTypeF.setEditable(flag);
+		endDateF.setEditable(flag);
 	}
-	public LocationInfo(JFrame frame, boolean admin, boolean nouvClient, Client client){
+	public LocationInfo(JFrame frame, boolean admin, boolean nouvClient, int numID){
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
-		initComponents(admin, nouvClient);
+		initComponents(admin, nouvClient, numID);
 		this.admin = admin;
 		this.nouvClient = nouvClient;
 		this.client = client;
@@ -42,15 +47,15 @@ public class LocationInfo extends JPanel{
 		main = frame;
 	}
 	
-	public void initComponents(boolean admin, boolean nouvClient){
+	public void initComponents(boolean admin, boolean nouvClient, int numID){
 		startDateL = new JLabel("Date de debut de la location");
-		dureeL = new JLabel("Duree de la location");
+		endDateL = new JLabel("Date de fin de la location");
 		vehicTypeL = new JLabel("Classe du vehicule");
 		idVehicL = new JLabel("Numero de plaque du vehicule");
 		montantL = new JLabel("Montant a payer");
 		locationNumberL = new JLabel("Numero de location");
 		startDateF = new JTextField();
-		dureeF = new JTextField();
+		endDateF = new JTextField();
 		String[] classes = new String[5];
 		classes[0] = "Economique";
 		classes[1] = "Moyenne";
@@ -61,6 +66,7 @@ public class LocationInfo extends JPanel{
 		idVehicF = new JTextField();
 		montantF = new JTextField();
 		locationNumberF = new JTextField();
+		locationNumberF.setText("" + numID);
 		save = new JButton("Sauvegarder");
 		change = new JButton("Modifier");
 		pay = new JButton("Effectuer un paiement");
@@ -68,13 +74,13 @@ public class LocationInfo extends JPanel{
 		menu = new JButton("Retour au menu");
 
 		startDateL.setBounds(50, 20, 200, 30);
-		dureeL.setBounds(50, 60, 200, 30);
+		endDateL.setBounds(50, 60, 200, 30);
 		vehicTypeL.setBounds(50, 100, 200, 30);
 		idVehicL.setBounds(50, 140, 200, 30);
 		montantL.setBounds(50, 180, 200, 30);
 		locationNumberL.setBounds(50, 220, 200, 30);
 		startDateF.setBounds(270, 20, 200, 30);
-		dureeF.setBounds(270, 60, 200, 30);
+		endDateF.setBounds(270, 60, 200, 30);
 		vehicTypeF.setBounds(270, 100, 200, 30);
 		idVehicF.setBounds(270, 140, 200, 30);
 		montantF.setBounds(270, 180, 200, 30);
@@ -84,15 +90,18 @@ public class LocationInfo extends JPanel{
 		pay.setBounds(270, 260, 200, 30);
 		end.setBounds(50, 300, 200, 30);
 		menu.setBounds(50, 400, 180, 30);
-
+		
+		idVehicF.setEditable(false);
+		montantF.setEditable(false);
+		locationNumberF.setEditable(false);
 		this.add(startDateL);
-		this.add(dureeL);
+		this.add(endDateL);
 		this.add(vehicTypeL);
 		this.add(idVehicL);
 		this.add(montantL);
 		this.add(locationNumberL);
 		this.add(startDateF);
-		this.add(dureeF);
+		this.add(endDateF);
 		this.add(vehicTypeF);
 		this.add(idVehicF);
 		this.add(montantF);
@@ -100,11 +109,18 @@ public class LocationInfo extends JPanel{
 		this.add(save);
 		this.add(change);
 		this.add(pay);
+		this.add(end);
 		this.add(menu);
+		location = Magasin.searchLocation(numID).get(0);
 		
 		if (nouvClient) {
 			change.setVisible(false);
 		} else {
+			startDateF.setText(Magasin.dateToString(location.getStartDate()));
+			endDateF.setText(Magasin.dateToString(location.getEndDate()));
+			idVehicF.setText(location.getVehicule().getImmatriculation());
+			montantF.setText(""+location.getMontantDue());
+			locationNumberF.setText(""+numID);
 			save.setVisible(false);
 			editable(false);
 		}
@@ -113,8 +129,22 @@ public class LocationInfo extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				change.setVisible(true);
 				save.setVisible(false);
-				
+				Vehicule vehicule;
 				editable(false);
+				if (nouvClient) {
+					
+					ArrayList<Vehicule> vehicules = Magasin.getVehiculesDisponible(Magasin.stringToDate(startDateF.getText()), Magasin.stringToDate(endDateF.getText()), 0);
+					if (vehicules.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Aucun vehicule disponible", "Erreur",
+								JOptionPane.ERROR_MESSAGE);
+					}else {
+						vehicule = vehicules.get(0);
+						location.setStartDate(Magasin.stringToDate(startDateF.getText()));
+						location.setEndDate(Magasin.stringToDate(endDateF.getText()));
+						Magasin.rendreVehiculeNonDisponible(location.getStartDate(), location.getEndDate(), vehicule.getImmatriculation());
+					}
+				}
+				
 				SwingUtilities.updateComponentTreeUI(main);
 				
 
@@ -126,6 +156,7 @@ public class LocationInfo extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				save.setVisible(true);
 				change.setVisible(false);
+				
 				SwingUtilities.updateComponentTreeUI(main);
 				
 
@@ -136,12 +167,23 @@ public class LocationInfo extends JPanel{
 		pay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				main.remove(current);
-				Paiement pay = new Paiement(main, admin, nouvClient);
+				Paiement pay = new Paiement(main, admin, nouvClient, numID);
 				SwingUtilities.updateComponentTreeUI(main);
 
 			}
 
 		});
+		
+		end.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				main.remove(current);
+				Calendar start = Magasin.makeCalendar(Magasin.stringToDate(startDateF.getText()));
+				Calendar end = Magasin.makeCalendar(Magasin.stringToDate(endDateF.getText()));
+				Magasin.removeLocation(location.getNumID(), start, end, idVehicF.getText());
+				MenuOption menu = new MenuOption(main, admin);
+				SwingUtilities.updateComponentTreeUI(main);
+				
+			}});
 		
 		menu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

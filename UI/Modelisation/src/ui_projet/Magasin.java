@@ -1,6 +1,7 @@
 package ui_projet;
 
 import models.Client;
+import models.Location;
 import models.ParametresFacturation;
 import models.Vehicule;
 
@@ -33,8 +34,8 @@ public final class Magasin {
 	 * 
 	 * @return Retourne un array contenant les vehicules disponibles
 	 */
-	public static ArrayList<Vehicule> getVehiculesDisponible(int[] date, int[] date2) {
-		return Magasin.getVehiculesDisponible(Magasin.makeCalendar(date), Magasin.makeCalendar(date2));
+	public static ArrayList<Vehicule> getVehiculesDisponible(int[] date, int[] date2, int classe) {
+		return Magasin.getVehiculesDisponible(Magasin.makeCalendar(date), Magasin.makeCalendar(date2), classe);
 	}
 
 	/**
@@ -51,9 +52,9 @@ public final class Magasin {
 	 * @return Retourne un array contenant les vehicules disponibles
 	 */
 
-	public static ArrayList<Vehicule> getVehiculesDisponible(Calendar debut, Calendar fin) {
+	public static ArrayList<Vehicule> getVehiculesDisponible(Calendar debut, Calendar fin, int classe) {
 
-		ArrayList<Vehicule> vicsDispo = registre.getVehiculeDisponible(debut, fin);
+		ArrayList<Vehicule> vicsDispo = registre.getVehiculeDisponible(debut, fin, classe);
 
 		return vicsDispo;
 	}
@@ -61,14 +62,27 @@ public final class Magasin {
 	public static void createVehicule(String type, String id, int km, int classe) {
 		registre.createVehicule(type, id, km, classe);
 	}
-
+	
+	public static void rendreVehiculeNonDisponible(int[] dateDebut, int[] dateFin, String immatriculation) {
+		registre.rendreVehiculeNonDisponible(dateDebut, dateFin, immatriculation);
+	}
+	
 	public static boolean removeVehicule(String string) {
 		return registre.removeVehicule(string);
+	}
+	
+	public static void createClient(String nom, String prenom, String telephone, String permisConduire) {
+		System.out.println("Magasin");
+		registre.createClient(nom, prenom, telephone, permisConduire);
 	}
 
 	public static void createLocation(int[] dateDebut, int[] dateFin, String immatriculation) {
 
 		registre.rendreVehiculeNonDisponible(dateDebut, dateFin, immatriculation);
+	}
+	
+	public static void createLocation(Client client) {
+		registre.createLocation(client);
 	}
 
 	public static Calendar makeCalendar(int[] date) {
@@ -78,8 +92,31 @@ public final class Magasin {
 
 		return cal;
 	}
+	
+	public static String dateToString(int[] date) {
+		return("" + date[0] + "/" + date[1] + "/"+ date[2] + "/" + date[3]);
+	}
+	
+	public static int[] stringToDate(String string) {
+		int[] date = new int[4];
+		ArrayList<String> dateString = new ArrayList<String>();
+		String temp = "";
+		for(int i = 0; i < string.length(); i++) {
+			if (string.charAt(i) != '/') {
+				temp += string.charAt(i);
+			} 
+			if (string.charAt(i) =='/' || i == (string.length()-1)) {
+				dateString.add(temp);
+				temp = "";
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			date[i] = Integer.parseInt(dateString.get(i));
+		}
+		return date;
+	}
 
-	public static lon[] getDaysFromCalendars(Calendar start, Calendar end) {
+	public static long[] getDaysFromCalendars(Calendar start, Calendar end) {
 		int daysInMils = 86400000; 
 		long[] totalTimeReturn = new long[2];
 		
@@ -113,12 +150,17 @@ public final class Magasin {
 	 *            de vehicule pour retrouver le vehicule a re-rendre disponible
 	 */
 
-	public static void removeLocation(Calendar debut, Calendar fin, String immatriculation) {
-		registre.removeLocation(debut, fin, immatriculation);
+	public static void removeLocation(int numID, Calendar debut, Calendar fin, String immatriculation) {
+		registre.removeLocation(numID, debut, fin, immatriculation);
 	}
 
 	public static ArrayList<Client> searchClients(String param) {
+		System.out.println("SearchMag");
 		return registre.searchClient(param);
+	}
+	
+	public static ArrayList<Location> searchLocation(int param) {
+		return registre.searchLocation(param);
 	}
 
 	public static void savegarderNouveauParametres(ParametresFacturation params) {

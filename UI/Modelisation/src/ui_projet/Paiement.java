@@ -19,7 +19,7 @@ public class Paiement extends JPanel{
 	private JPanel current;
 	private JFrame main;
 	
-	public Paiement(JFrame frame, boolean admin, boolean nouvClient) {
+	public Paiement(JFrame frame, boolean admin, boolean nouvClient, int locationNumber) {
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
 		initComponents(admin, nouvClient);

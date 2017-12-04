@@ -16,8 +16,7 @@ public class MenuClient extends JPanel {
 	private JButton button, menu;
 	private JPanel current;
 	private JFrame main;
-	private Magasin magasin;
-
+	
 	public MenuClient(JFrame frame, boolean admin, boolean nouvClient) {
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
@@ -58,6 +57,7 @@ public class MenuClient extends JPanel {
 				main.remove(current);
 				if (Magasin.searchClients(phoneNumber.getText()).isEmpty()) {
 					nouvClient = true;
+					System.out.println("" + nouvClient);
 					ClientInfo info = new ClientInfo(main, admin, nouvClient, phoneNumber.getText());
 				}else {
 					nouvClient = false;

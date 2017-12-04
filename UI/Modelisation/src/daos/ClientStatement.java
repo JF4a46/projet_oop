@@ -26,12 +26,12 @@ public class ClientStatement extends dbStatement {
     public void save(Client client){
     	this.setValue("nom", client.getNom());
     	this.setValue("prenom", client.getPrenom());
-    	this.setValue("telephone_maison", client.getTelephoneMaison());
-    	this.setValue("cellulaire", client.getCellulaire());
-    	this.setValue("telephone_bureau", client.getTelephoneBureau());
-    	this.setValue("date_naissance", client.getDateNaissance().toString());
-    	this.setValue("courriel", client.getCourriel());
-    	this.setValue("adresse", client.getAdresse());
+//    	this.setValue("telephone_maison", client.getTelephoneMaison());
+//    	this.setValue("cellulaire", client.getCellulaire());
+//    	this.setValue("telephone_bureau", client.getTelephoneBureau());
+//    	this.setValue("date_naissance", client.getDateNaissance().toString());
+//    	this.setValue("courriel", client.getCourriel());
+//    	this.setValue("adresse", client.getAdresse());
     	this.setValue("permis_conduire", client.getPermisConduire());
     	this.setValue("classe_conduite", "");
     	this.setValue("programme_point", "");
