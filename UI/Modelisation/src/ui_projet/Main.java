@@ -21,6 +21,10 @@ public class Main extends JFrame {
 	public static void main(String[] args) {
 		Magasin.wakeUp();
 
+		int[] dateDebut = { 2018, 9, 7, 14 };
+		int[] dateFin = { 2018, 10, 21, 12 };
+
+		Magasin.getDaysFromCalendars(Magasin.makeCalendar(dateDebut), Magasin.makeCalendar(dateFin));
 		// API examples pour location
 		// int[] dateDebut = { 2018, 9, 7, 13 };
 		// int[] dateFin = { 2018, 10, 21, 12 };

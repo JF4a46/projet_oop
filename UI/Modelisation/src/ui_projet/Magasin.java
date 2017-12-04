@@ -11,7 +11,7 @@ import controlers.ClientController;
 
 /**
  * 
- * @author FillionJ
+ * @author
  *
  */
 
@@ -66,9 +66,9 @@ public final class Magasin {
 		return registre.removeVehicule(string);
 	}
 
-	public static void createLocation(int[] dateDebut, int[] dateFin,String immatriculation) {
-		 
-		registre.rendreVehiculeNonDisponible(dateDebut, dateFin,immatriculation);
+	public static void createLocation(int[] dateDebut, int[] dateFin, String immatriculation) {
+
+		registre.rendreVehiculeNonDisponible(dateDebut, dateFin, immatriculation);
 	}
 
 	public static Calendar makeCalendar(int[] date) {
@@ -79,15 +79,40 @@ public final class Magasin {
 		return cal;
 	}
 
+	public static lon[] getDaysFromCalendars(Calendar start, Calendar end) {
+		int daysInMils = 86400000; 
+		long[] totalTimeReturn = new long[2];
+		
+		long startMils = start.getTimeInMillis();
+		long endMils = end.getTimeInMillis();
+		
+		long time = endMils - startMils;
+		
+		totalTimeReturn[0] = time / 86400000;
+		totalTimeReturn[1] =  time % daysInMils;
+		
+		if(totalTimeReturn[1] != 0) {
+			totalTimeReturn[1] = totalTimeReturn[1] / 3600000;
+		}
+		
+		//System.out.println(java.util.Arrays.toString(totalTimeReturn));
+		
+		return totalTimeReturn;
+	}
+
 	/**
 	 * 
-	 * Pour retirer un vehicule, envoi immatriculation, date de debut et fin en calendrier
+	 * Pour retirer un vehicule, envoi immatriculation, date de debut et fin en
+	 * calendrier
 	 * 
-	 * @param debut date de debut de location
-	 * @param fin date de fin de location
-	 * @param immatriculation de vehicule pour retrouver le vehicule a re-rendre disponible
+	 * @param debut
+	 *            date de debut de location
+	 * @param fin
+	 *            date de fin de location
+	 * @param immatriculation
+	 *            de vehicule pour retrouver le vehicule a re-rendre disponible
 	 */
-	
+
 	public static void removeLocation(Calendar debut, Calendar fin, String immatriculation) {
 		registre.removeLocation(debut, fin, immatriculation);
 	}
