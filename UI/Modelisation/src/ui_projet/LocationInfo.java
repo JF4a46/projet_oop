@@ -113,6 +113,7 @@ public class LocationInfo extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				change.setVisible(true);
 				save.setVisible(false);
+				
 				editable(false);
 				SwingUtilities.updateComponentTreeUI(main);
 				

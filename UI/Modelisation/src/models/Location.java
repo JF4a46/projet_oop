@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Location {
 
@@ -27,6 +28,9 @@ public class Location {
 	}
 
 	public void calculerTotal() {
+		
+		long jours = TimeUnit.MILLISECONDS.toDays(dateFin.getTime() - dateDebut.getTime());
+		
 	}
 
 	
