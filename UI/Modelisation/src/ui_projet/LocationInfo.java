@@ -4,32 +4,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JList;
 import javax.swing.SwingUtilities;
+
+import models.Client;
 
 public class LocationInfo extends JPanel{
 	private boolean admin, nouvClient;
 	private JLabel startDateL, dureeL, vehicTypeL, idVehicL, montantL, locationNumberL;
-	private JTextField startDateF, dureeF, vehicTypeF, idVehicF, montantF, locationNumberF;
+	private JTextField startDateF, dureeF, idVehicF, montantF, locationNumberF;
+	private JComboBox<String> vehicTypeF;
 	private JButton menu, save, change, pay, end;
 	private JPanel current;
 	private JFrame main;
+	private Client client;
 
 	public void editable(boolean flag) {
 		startDateF.setEditable(flag);
 		dureeF.setEditable(flag);
-		vehicTypeF.setEditable(flag);
-		vehicTypeF.setEditable(flag);
+		//vehicTypeF.setEditable(flag);
+		//vehicTypeF.setEditable(flag);
 	}
-	public LocationInfo(JFrame frame, boolean admin, boolean nouvClient){
+	public LocationInfo(JFrame frame, boolean admin, boolean nouvClient, Client client){
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
 		initComponents(admin, nouvClient);
 		this.admin = admin;
 		this.nouvClient = nouvClient;
+		this.client = client;
 		current = this;
 		frame.getContentPane().add(this);
 		main = frame;
@@ -44,7 +51,13 @@ public class LocationInfo extends JPanel{
 		locationNumberL = new JLabel("Numero de location");
 		startDateF = new JTextField();
 		dureeF = new JTextField();
-		vehicTypeF = new JTextField();
+		String[] classes = new String[5];
+		classes[0] = "Economique";
+		classes[1] = "Moyenne";
+		classes[2] = "Confort";
+		classes[3] = "Luxe";
+		classes[4] = "Utilitaire";
+		vehicTypeF = new JComboBox<String>(classes);
 		idVehicF = new JTextField();
 		montantF = new JTextField();
 		locationNumberF = new JTextField();

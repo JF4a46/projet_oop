@@ -135,7 +135,7 @@ public class ClientInfo extends JPanel {
 		infoLoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				main.remove(current);
-				LocationInfo info = new LocationInfo(main, admin, nouvClient);
+				LocationInfo info = new LocationInfo(main, admin, nouvClient, client);
 				SwingUtilities.updateComponentTreeUI(main);
 
 			}

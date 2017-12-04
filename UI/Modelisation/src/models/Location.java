@@ -1,14 +1,21 @@
 package models;
 
+import java.util.Date;
+
 public class Location {
 
-	ParametresFacturation params;
+	private ParametresFacturation params;
+	private Client client;
+	private Vehicule vehicule;
+	private Date dateDebut;
+	private Date dateFin;
 	private int numID;
 	private static int IDNumber = 0;
 
 	public Location(ParametresFacturation params) {
 		this.numID = IDNumber;
 		IDNumber++;
+		this.params = params;
 	}
 	
 	public int getNumID() {
@@ -19,7 +26,8 @@ public class Location {
 		this.numID = numID;
 	}
 
-	public void calculerPrix() {
+	public void calculerTotal() {
 	}
 
+	
 }
