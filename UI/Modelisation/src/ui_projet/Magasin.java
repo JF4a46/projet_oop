@@ -72,7 +72,7 @@ public final class Magasin {
 	}
 
 	public static void createClient(String nom, String prenom, String telephone, String permisConduire) {
-		
+
 		registre.createClient(nom, prenom, telephone, permisConduire);
 	}
 
@@ -82,6 +82,7 @@ public final class Magasin {
 
 	public static void createLocation(Client client) {
 		registre.createLocation(client);
+		registre.writeLocationsToFile();
 	}
 
 	public static Calendar makeCalendar(int[] date) {
@@ -174,5 +175,6 @@ public final class Magasin {
 	public static void wakeUp() {
 		registre.loadVehicules();
 		registre.loadClientsFromFile();
+		registre.loadLocationsFromFile();
 	}
 }
