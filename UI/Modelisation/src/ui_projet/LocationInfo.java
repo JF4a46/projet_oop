@@ -19,7 +19,7 @@ import models.Client;
 import models.Location;
 import models.Vehicule;
 
-public class LocationInfo extends JPanel{
+public class LocationInfo extends JPanel {
 	private boolean admin, nouvClient;
 	private JLabel startDateL, endDateL, vehicTypeL, idVehicL, montantL, locationNumberL, assurancesL, kiloIllimL;
 	private JTextField startDateF, endDateF, idVehicF, montantF, locationNumberF;
@@ -35,7 +35,8 @@ public class LocationInfo extends JPanel{
 		startDateF.setEditable(flag);
 		endDateF.setEditable(flag);
 	}
-	public LocationInfo(JFrame frame, boolean admin, boolean nouvClient, int numID){
+
+	public LocationInfo(JFrame frame, boolean admin, boolean nouvClient, int numID) {
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
 		this.admin = admin;
@@ -46,8 +47,11 @@ public class LocationInfo extends JPanel{
 		main = frame;
 		initComponents(admin, nouvClient, numID);
 	}
-	
-	public void initComponents(boolean admin, boolean nouvClient, int numID){
+
+	public void initComponents(boolean admin, boolean nouvClient, int numID) {
+		JLabel format = new JLabel("AAAA/MM/JJ/HH");
+		format.setBounds(50, 05, 200, 30);
+		add(format);
 		startDateL = new JLabel("Date de debut de la location");
 		endDateL = new JLabel("Date de fin de la location");
 		vehicTypeL = new JLabel("Classe du vehicule");
@@ -99,8 +103,7 @@ public class LocationInfo extends JPanel{
 		pay.setBounds(270, 300, 200, 30);
 		end.setBounds(270, 340 , 200, 30);
 		menu.setBounds(50, 400, 180, 30);
-		
-		
+
 		idVehicF.setEditable(false);
 		montantF.setEditable(false);
 		locationNumberF.setEditable(false);
@@ -126,19 +129,19 @@ public class LocationInfo extends JPanel{
 		this.add(assurances);
 		this.add(kiloIllim);
 		location = Magasin.searchLocation(numID).get(0);
-		
+
 		if (nouvClient) {
 			change.setVisible(false);
 		} else {
 			startDateF.setText(Magasin.dateToString(location.getStartDate()));
 			endDateF.setText(Magasin.dateToString(location.getEndDate()));
 			idVehicF.setText(location.getVehicule().getImmatriculation());
-			montantF.setText(""+location.getMontantDue());
-			locationNumberF.setText(""+numID);
+			montantF.setText("" + location.getMontantDue());
+			locationNumberF.setText("" + numID);
 			save.setVisible(false);
 			editable(false);
 		}
-		
+
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				change.setVisible(true);
@@ -147,38 +150,40 @@ public class LocationInfo extends JPanel{
 				editable(false);
 				if (nouvClient) {
 					
-					ArrayList<Vehicule> vehicules = Magasin.getVehiculesDisponible(Magasin.stringToDate(startDateF.getText()), Magasin.stringToDate(endDateF.getText()), 0);
+					ArrayList<Vehicule> vehicules = Magasin.getVehiculesDisponible(
+							Magasin.stringToDate(startDateF.getText()), Magasin.stringToDate(endDateF.getText()),
+							vehicTypeF.getSelectedIndex());
+				
 					if (vehicules.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Aucun vehicule disponible", "Erreur",
 								JOptionPane.ERROR_MESSAGE);
-					}else {
+					} else {
 						vehicule = vehicules.get(0);
 						location.setStartDate(Magasin.stringToDate(startDateF.getText()));
 						location.setEndDate(Magasin.stringToDate(endDateF.getText()));
 						location.setVehicule(vehicule);
 						Magasin.rendreVehiculeNonDisponible(location.getStartDate(), location.getEndDate(), vehicule.getImmatriculation());
+						
 					}
 				}
-				
+
 				SwingUtilities.updateComponentTreeUI(main);
-				
 
 			}
 
 		});
-		
+
 		change.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save.setVisible(true);
 				change.setVisible(false);
-				
+
 				SwingUtilities.updateComponentTreeUI(main);
-				
 
 			}
 
 		});
-		
+
 		pay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				main.remove(current);
@@ -188,7 +193,7 @@ public class LocationInfo extends JPanel{
 			}
 
 		});
-		
+
 		end.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				main.remove(current);
@@ -197,14 +202,15 @@ public class LocationInfo extends JPanel{
 				Magasin.removeLocation(location.getNumID(), start, end, idVehicF.getText());
 				MenuOption menu = new MenuOption(main, admin);
 				SwingUtilities.updateComponentTreeUI(main);
-				
-			}});
-		
+			}
+		});
+
 		menu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				main.remove(current);
 				MenuOption menu = new MenuOption(main, admin);
 				SwingUtilities.updateComponentTreeUI(main);
+
 				
 			}});
 		assurances.addActionListener(new ActionListener() {
@@ -227,6 +233,7 @@ public class LocationInfo extends JPanel{
 			}
 		});
 		
+		
 	}
-	
+
 }
