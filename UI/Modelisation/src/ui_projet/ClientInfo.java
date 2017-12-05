@@ -71,7 +71,7 @@ public class ClientInfo extends JPanel {
 		change.setBounds(50, 220, 200, 30);
 		infoLoc.setBounds(270, 220, 200, 30);
 		menu.setBounds(50, 400, 180, 30);
-		
+
 		locationNumberF.setEditable(false);
 
 		this.add(firstNameL);
@@ -96,10 +96,9 @@ public class ClientInfo extends JPanel {
 			firstNameF.setText(client.getPrenom());
 			lastNameF.setText(client.getNom());
 			licenseNumberF.setText(client.getPermisConduire());
-			locationNumberF.setText(""+client.getLocationNum());
+			locationNumberF.setText("" + client.getLocationNum());
 			save.setVisible(false);
 			editable(false);
-
 		}
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,14 +106,15 @@ public class ClientInfo extends JPanel {
 				save.setVisible(false);
 				editable(false);
 				if (nouvClient) {
-					Magasin.createClient(lastNameF.getText(), firstNameF.getText(), phoneNumberF.getText(), licenseNumberF.getText());
+					Magasin.createClient(lastNameF.getText(), firstNameF.getText(), phoneNumberF.getText(),
+							licenseNumberF.getText());
+
 					ArrayList<Client> clients = Magasin.searchClients(phoneNumber);
 					client = clients.get(0);
-					//client = Magasin.searchClients(phoneNumber).get(0); 
+					// client = Magasin.searchClients(phoneNumber).get(0);
 					Magasin.createLocation(client);
-					locationNumberF.setText(""+client.getLocationNum());
-				}
-				else {
+					locationNumberF.setText("" + client.getLocationNum());
+				} else {
 					client.setNom(lastNameF.getText());
 					client.setPrenom(firstNameF.getText());
 					client.setTelephone(phoneNumberF.getText());
@@ -122,37 +122,31 @@ public class ClientInfo extends JPanel {
 				}
 				SwingUtilities.updateComponentTreeUI(main);
 			}
-
 		});
-		
+
 		change.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save.setVisible(true);
 				change.setVisible(false);
 				editable(true);
 				SwingUtilities.updateComponentTreeUI(main);
-				
-
 			}
-
 		});
-		
+
 		infoLoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				main.remove(current);
 				LocationInfo info = new LocationInfo(main, admin, nouvClient, client.getLocationNum());
 				SwingUtilities.updateComponentTreeUI(main);
-
 			}
-
 		});
-		
+
 		menu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				main.remove(current);
 				MenuOption menu = new MenuOption(main, admin);
 				SwingUtilities.updateComponentTreeUI(main);
-				
-			}});
+			}
+		});
 	}
 }

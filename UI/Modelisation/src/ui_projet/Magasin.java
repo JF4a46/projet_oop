@@ -62,25 +62,24 @@ public final class Magasin {
 	public static void createVehicule(String type, String id, int km, int classe) {
 		registre.createVehicule(type, id, km, classe);
 	}
-	
+
 	public static void rendreVehiculeNonDisponible(int[] dateDebut, int[] dateFin, String immatriculation) {
 		registre.rendreVehiculeNonDisponible(dateDebut, dateFin, immatriculation);
 	}
-	
+
 	public static boolean removeVehicule(String string) {
 		return registre.removeVehicule(string);
 	}
-	
+
 	public static void createClient(String nom, String prenom, String telephone, String permisConduire) {
-		System.out.println("Magasin");
+		
 		registre.createClient(nom, prenom, telephone, permisConduire);
 	}
 
 	public static void createLocation(int[] dateDebut, int[] dateFin, String immatriculation) {
-
 		registre.rendreVehiculeNonDisponible(dateDebut, dateFin, immatriculation);
 	}
-	
+
 	public static void createLocation(Client client) {
 		registre.createLocation(client);
 	}
@@ -92,20 +91,21 @@ public final class Magasin {
 
 		return cal;
 	}
-	
+
 	public static String dateToString(int[] date) {
-		return("" + date[0] + "/" + date[1] + "/"+ date[2] + "/" + date[3]);
+		return ("" + date[0] + "/" + date[1] + "/" + date[2] + "/" + date[3]);
 	}
-	
+
 	public static int[] stringToDate(String string) {
 		int[] date = new int[4];
 		ArrayList<String> dateString = new ArrayList<String>();
 		String temp = "";
-		for(int i = 0; i < string.length(); i++) {
+
+		for (int i = 0; i < string.length(); i++) {
 			if (string.charAt(i) != '/') {
 				temp += string.charAt(i);
-			} 
-			if (string.charAt(i) =='/' || i == (string.length()-1)) {
+			}
+			if (string.charAt(i) == '/' || i == (string.length() - 1)) {
 				dateString.add(temp);
 				temp = "";
 			}
@@ -117,23 +117,23 @@ public final class Magasin {
 	}
 
 	public static long[] getDaysFromCalendars(Calendar start, Calendar end) {
-		int daysInMils = 86400000; 
+		int daysInMils = 86400000;
 		long[] totalTimeReturn = new long[2];
-		
+
 		long startMils = start.getTimeInMillis();
 		long endMils = end.getTimeInMillis();
-		
+
 		long time = endMils - startMils;
-		
+
 		totalTimeReturn[0] = time / 86400000;
-		totalTimeReturn[1] =  time % daysInMils;
-		
-		if(totalTimeReturn[1] != 0) {
+		totalTimeReturn[1] = time % daysInMils;
+
+		if (totalTimeReturn[1] != 0) {
 			totalTimeReturn[1] = totalTimeReturn[1] / 3600000;
 		}
-		
-		//System.out.println(java.util.Arrays.toString(totalTimeReturn));
-		
+
+		// System.out.println(java.util.Arrays.toString(totalTimeReturn));
+
 		return totalTimeReturn;
 	}
 
@@ -158,7 +158,7 @@ public final class Magasin {
 		System.out.println("SearchMag");
 		return registre.searchClient(param);
 	}
-	
+
 	public static ArrayList<Location> searchLocation(int param) {
 		return registre.searchLocation(param);
 	}
@@ -173,6 +173,6 @@ public final class Magasin {
 
 	public static void wakeUp() {
 		registre.loadVehicules();
-
+		registre.loadClientsFromFile();
 	}
 }

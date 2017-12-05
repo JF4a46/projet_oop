@@ -19,7 +19,7 @@ public class RegistreLocation {
 
 	public RegistreLocation() {
 		params = new ParametresFacturation();
-		System.out.print("nouveau registre");
+
 	}
 
 	public void createVehicule(String type, String id, int km, int classe) {
@@ -40,8 +40,7 @@ public class RegistreLocation {
 		ArrayList<Vehicule> dispo = new ArrayList<Vehicule>();
 
 		for (int i = 0; i < vehicules.size(); i++) {
-			if (vehicules.get(i).isVehiculeDisponible(start, end)) {
-				System.out.println("Index " + i);
+			if (vehicules.get(i).isVehiculeDisponible(start, end) && vehicules.get(i).getClasse() == classe) {
 				dispo.add(vehicules.get(i));
 			}
 		}
@@ -50,8 +49,9 @@ public class RegistreLocation {
 	}
 
 	public void createClient(String nom, String prenom, String telephone, String permisConduire) {
-		System.out.println("Registre");
+
 		clients.add(new Client(nom, prenom, telephone, permisConduire));
+		writeClientToFile();
 	}
 
 	public ArrayList<Client> searchClient(String param) {
@@ -70,14 +70,12 @@ public class RegistreLocation {
 	}
 
 	public ArrayList<Location> searchLocation(int param) {
-
 		ArrayList<Location> resultats = new ArrayList<>();
 		for (int i = 0; i < locations.size(); i++) {
 			if (locations.get(i).getNumID() == param) {
 				resultats.add(locations.get(i));
 			}
 		}
-
 		return resultats;
 	}
 
@@ -90,7 +88,7 @@ public class RegistreLocation {
 	}
 
 	public void removeLocation(int numID, Calendar debut, Calendar fin, String immatriculation) {
-		
+
 		for (int i = 0; i < vehicules.size(); i++) {
 			if (vehicules.get(i).getImmatriculation().equals(immatriculation)) {
 				vehicules.get(i).removeIndisponiblePeriod(debut, fin);
@@ -99,7 +97,7 @@ public class RegistreLocation {
 			}
 		}
 		for (int i = 0; i < locations.size(); i++) {
-			if (locations.get(i).getNumID() ==numID) {
+			if (locations.get(i).getNumID() == numID) {
 				locations.get(i).getClient().setLocationNum(0);
 				locations.remove(i);
 			}
@@ -127,7 +125,7 @@ public class RegistreLocation {
 		return params;
 	}
 
-	public void loadVehicules() {
+	void loadVehicules() {
 		ArrayList<String> bruteData = DbFileSystem.loadFromFile("vehicules.txt");
 
 		vehicules = new ArrayList<Vehicule>();
@@ -135,8 +133,9 @@ public class RegistreLocation {
 		for (int i = 0; i < bruteData.size(); i++) {
 			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
 				String[] data = bruteData.get(i).split(",");
-				// System.out.println(java.util.Arrays.toString(data));
+
 				vehicules.add(new Vehicule(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3])));
+
 				if (data.length > 4) {
 					for (int j = 4; j < data.length; j++) {
 						String date[] = data[j].split("/");
@@ -159,17 +158,79 @@ public class RegistreLocation {
 		}
 	}
 
+	void loadClientsFromFile() {
+		ArrayList<String> bruteData = DbFileSystem.loadFromFile("clients.txt");
+
+		clients = new ArrayList<Client>();
+		for (int i = 0; i < bruteData.size(); i++) {
+			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
+
+				String[] data = bruteData.get(i).split(",");
+				clients.add(new Client(data[0], data[1], data[2], data[3], Integer.parseInt(data[4])));
+			}
+		}
+	}
+
+	private void writeClientToFile() {
+		String toWrite = "";
+
+		for (int i = 0; i < clients.size(); i++) {
+			if (i != 0)
+				toWrite += "\n";
+			toWrite += clients.get(i).getNom() + "," + clients.get(i).getPrenom() + "," + clients.get(i).getTelephone()
+					+ "," + clients.get(i).getPermisConduire() + "," + clients.get(i).getLocationNum();
+		}
+		DbFileSystem.writeToFile("clients.txt", toWrite);
+	}
+
+	void writeLocationsToFile() {
+		String toWrite = "";
+
+		for (int i = 0; i < locations.size(); i++) {
+			if (i != 0)
+				toWrite += "\n";
+
+			toWrite += locations.get(i).startDateToString() + "/" + locations.get(i).endDateToString() + ","
+					+ locations.get(i).getPhoneNumber() + "," + locations.get(i).getNumID();
+		}
+
+		DbFileSystem.writeToFile("locations.txt", toWrite);
+
+	}
+
+	void loadLocationsFromFile() {
+		ArrayList<String> bruteData = DbFileSystem.loadFromFile("locations.txt");
+
+		locations = new ArrayList<Location>();
+		for (int i = 0; i < bruteData.size(); i++) {
+			if (bruteData.get(i) != "" || bruteData.get(i) != "\n") {
+
+				String[] data = bruteData.get(i).split(",");
+				String[] time = data[0].split("/");
+				String[] startDateStr = time[0].split(" ");
+				String[] endDateStr = time[1].split(" ");
+				int[] startDate = new int[4];
+				int[] endDate = new int[4];
+				for (int j = 0; j < startDateStr.length; j++) {
+					startDate[j] = Integer.parseInt(startDateStr[j]);
+					endDate[j] = Integer.parseInt(endDateStr[j]);
+				}
+				Client ref = searchClient(data[1]).get(0);
+
+				locations.add(new Location(ref, Magasin.getCurrentParametres(), startDate, endDate,
+						Integer.parseInt(data[2])));
+			}
+		}
+	}
+
 	public void writeVehicules() {
 		String toWrite = "";
 
 		for (int i = 0; i < vehicules.size(); i++) {
-
 			if (i != 0)
 				toWrite += "\n";
-
 			toWrite += vehicules.get(i).getType() + "," + vehicules.get(i).getImmatriculation().toUpperCase() + ","
 					+ vehicules.get(i).getKm() + "," + vehicules.get(i).getClasse();
-
 			if (vehicules.get(i).getDebutLocation().size() > 0 && vehicules.get(i).getFinLocation().size() > 0) {
 				toWrite += ",";
 
