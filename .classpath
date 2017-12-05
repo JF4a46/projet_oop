@@ -5,6 +5,5 @@
 	<classpathentry kind="src" path="Livrable1/Interface"/>
 	<classpathentry kind="src" path="Livrable1/Objets"/>
 	<classpathentry kind="src" path="Objets"/>
-	<classpathentry kind="src" path="UI/Modelisation/src"/>
-	<classpathentry kind="output" path="UI/Modelisation/bin"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
