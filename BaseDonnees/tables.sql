@@ -25,15 +25,10 @@ CREATE TABLE client(
     id INTEGER PRIMARY KEY,
     nom varchar(25),
     prenom varchar(25),
-    telephone_maison varchar(25),
-    cellulaire varchar(25),
-    telephone_bureau varchar(25),
-    date_naissance date,
-    courriel varchar(50),
-    adresse varchar(100),
+    telephone varchar(25),
     permis_conduire varchar(25),
     classe_conduite varchar(5),
-    programme_point BOOLEAN
+    age INTEGER
 );
 
 CREATE TABLE location(

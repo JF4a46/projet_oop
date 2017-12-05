@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import models.Location;
+
 public class Paiement extends JPanel{
 	
 	private boolean admin, nouvClient;
@@ -18,22 +20,24 @@ public class Paiement extends JPanel{
 	private JButton pay, menu;
 	private JPanel current;
 	private JFrame main;
+	private Location location;
 	
 	public Paiement(JFrame frame, boolean admin, boolean nouvClient, int locationNumber) {
+		this.location = Magasin.searchLocation(locationNumber).get(0);
 		setLayout(null);
 		setBounds(100, 100, 500, 500);
-		initComponents(admin, nouvClient);
 		this.admin = admin;
 		this.nouvClient = nouvClient;
 		current = this;
 		frame.add(this);
 		main = frame;
+		initComponents(admin, nouvClient);
 	}
 	
 	public void initComponents(boolean admin, boolean nouvClient) {
 		montantDueL = new JLabel("Montant a payer");
 		montantPayeL = new JLabel("Paiement");
-		montantDueF = new JTextField();
+		montantDueF = new JTextField(String.valueOf(this.location.calculerPrix()));
 		montantPayeF = new JTextField();
 		pay = new JButton("Completer la transaction");
 		menu = new JButton("Retour au menu");

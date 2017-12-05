@@ -66,7 +66,7 @@ public class RegistreLocation {
 	}
 
 	public void createLocation(Client client) {
-		locations.add(new Location(client));
+		locations.add(new Location(this.params, client));
 	}
 
 	public ArrayList<Location> searchLocation(int param) {
